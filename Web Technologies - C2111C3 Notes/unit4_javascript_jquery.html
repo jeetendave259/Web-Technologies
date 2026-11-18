@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detailed Unit 4 study guide to JavaScript, the DOM, forms, events, DHTML, AJAX, and jQuery.">
+    <title>Unit 4: JavaScript and jQuery Study Guide</title>
+    <style>
+        :root {
+            --ink: #23343a;
+            --teal: #087e78;
+            --teal-dark: #075752;
+            --coral: #d95e45;
+            --gold: #efbd4b;
+            --green: #36775a;
+            --paper: #ffffff;
+            --page: #edf2ef;
+            --soft-teal: #e6f4f1;
+            --soft-coral: #fbede9;
+            --line: #d8e2dd;
+            --code: #202a2d;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            padding: 24px;
+            color: var(--ink);
+            background: var(--page);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.65;
+        }
+        .page {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            overflow: hidden;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            box-shadow: 0 8px 28px rgba(7, 87, 82, 0.08);
+        }
+        .masthead {
+            padding: 38px 44px 30px;
+            color: white;
+            background: var(--teal-dark);
+            border-bottom: 6px solid var(--coral);
+        }
+        .course-label {
+            margin: 0 0 8px;
+            color: #f6d684;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .masthead h1 {
+            max-width: 850px;
+            margin: 0;
+            font-size: 2.2rem;
+            line-height: 1.2;
+        }
+        .masthead p:last-child {
+            max-width: 800px;
+            margin: 14px 0 0;
+            color: #e0f0ed;
+        }
+        .top-links, .topic-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            padding: 15px 44px;
+            border-bottom: 1px solid var(--line);
+        }
+        .top-links { background: #f7f9f8; }
+        .topic-nav {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 2px 8px rgba(7, 87, 82, 0.06);
+        }
+        a { color: var(--teal-dark); }
+        .top-links a, .topic-nav a { font-weight: 650; }
+        .print-button {
+            padding: 9px 14px;
+            color: white;
+            background: var(--teal);
+            border: 1px solid var(--teal);
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 650;
+            cursor: pointer;
+            transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        }
+        .print-button:hover {
+            background: var(--teal-dark);
+            border-color: var(--teal-dark);
+            box-shadow: 0 3px 8px rgba(7, 87, 82, 0.2);
+            transform: translateY(-1px);
+        }
+        .print-button:active {
+            box-shadow: none;
+            transform: translateY(1px);
+        }
+        .print-button:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 3px;
+        }
+        main { padding: 4px 44px 48px; }
+        section { padding-top: 24px; scroll-margin-top: 72px; }
+        h2 {
+            margin: 28px 0 14px;
+            color: var(--teal-dark);
+            font-size: 1.55rem;
+            line-height: 1.3;
+        }
+        h2 .topic-number {
+            display: inline-block;
+            margin-right: 8px;
+            color: var(--coral);
+            font-size: 0.85rem;
+            vertical-align: 0.15em;
+        }
+        h3 { margin: 26px 0 10px; color: var(--teal); font-size: 1.15rem; }
+        h4 { margin: 0 0 8px; color: var(--teal-dark); }
+        p { margin: 10px 0 15px; }
+        ul, ol { padding-left: 24px; }
+        li { margin: 6px 0; }
+        .lead { max-width: 860px; font-size: 1.08rem; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 18px 0;
+        }
+        .panel {
+            min-width: 0;
+            padding: 18px;
+            background: #f7f9f8;
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--teal);
+        }
+        .panel p:last-child { margin-bottom: 0; }
+        .note {
+            padding: 14px 16px;
+            background: #fbf4df;
+            border-left: 5px solid var(--gold);
+        }
+        .note p:last-child { margin-bottom: 0; }
+        code {
+            padding: 1px 5px;
+            color: #8b2e50;
+            background: #f3edf0;
+            border-radius: 3px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.93em;
+            overflow-wrap: anywhere;
+        }
+        pre {
+            max-width: 100%;
+            margin: 14px 0 0;
+            padding: 16px 18px;
+            overflow-x: auto;
+            color: #e5edf3;
+            background: var(--code);
+            border-left: 4px solid var(--gold);
+            border-radius: 4px;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+        pre code { padding: 0; color: inherit; background: none; font-size: 0.9rem; }
+        .demo {
+            margin: 0 0 22px;
+            padding: 22px;
+            background: white;
+            border: 1px solid var(--line);
+            border-top: 0;
+            border-radius: 0 0 4px 4px;
+        }
+        .demo::before {
+            display: block;
+            margin: -22px -22px 18px;
+            padding: 5px 12px;
+            color: var(--teal-dark);
+            background: #fbf4df;
+            content: "TRY THE EXAMPLE";
+            font-size: 0.72rem;
+            font-weight: 750;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 14px;
+        }
+        .demo-surface {
+            min-width: 0;
+            padding: 16px;
+            background: #f8fbfa;
+            border: 1px solid var(--line);
+        }
+        .demo-surface > :first-child { margin-top: 0; }
+        .demo-surface > :last-child { margin-bottom: 0; }
+        .demo-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #586d69;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        button {
+            min-height: 42px;
+            padding: 9px 14px;
+            color: white;
+            background: var(--teal);
+            border: 0;
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 650;
+            cursor: pointer;
+        }
+        button:hover { background: var(--teal-dark); }
+        button:focus-visible, input:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 2px;
+        }
+        button:disabled { opacity: 0.65; cursor: wait; }
+        .button-secondary { color: var(--teal-dark); background: var(--soft-teal); border: 1px solid #b6d9d1; }
+        .button-secondary:hover { color: white; }
+        .status {
+            min-height: 1.7em;
+            margin: 12px 0 0;
+            color: var(--teal-dark);
+            font-weight: 600;
+        }
+        .count-display {
+            margin: 0 0 12px;
+            color: var(--teal-dark);
+            font-size: 2rem;
+            font-weight: 750;
+        }
+        .dom-card {
+            padding: 15px;
+            background: white;
+            border: 1px solid var(--line);
+            border-left: 5px solid #9aabb1;
+        }
+        .dom-card.is-highlighted {
+            background: var(--soft-coral);
+            border-left-color: var(--coral);
+        }
+        .form-demo label { display: block; margin: 10px 0 4px; font-weight: 650; }
+        .form-demo input {
+            width: 100%;
+            min-height: 42px;
+            padding: 9px 10px;
+            border: 1px solid #aebdb8;
+            border-radius: 3px;
+            font: inherit;
+        }
+        .form-message { min-height: 1.6em; margin: 10px 0 0; }
+        .form-message.error { color: #a1332a; }
+        .form-message.success { color: var(--green); }
+        .dhtml-card {
+            padding: 16px;
+            background: #f1f5f5;
+            border: 1px solid #c9d5d2;
+            transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+        }
+        .dhtml-card.is-active {
+            color: white;
+            background: var(--teal);
+            transform: translateY(-2px);
+        }
+        .dhtml-card.is-active h4 { color: white; }
+        .event-output {
+            display: inline-block;
+            min-width: 48px;
+            margin: 0 12px;
+            color: var(--coral);
+            font-size: 1.6rem;
+            font-weight: 750;
+            text-align: center;
+        }
+        .feed-output {
+            min-height: 54px;
+            padding: 12px;
+            background: #f7f9f8;
+            border: 1px solid var(--line);
+        }
+        table { width: 100%; margin: 18px 0; border-collapse: collapse; }
+        th, td { padding: 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+        th { color: white; background: var(--teal-dark); }
+        tr:nth-child(even) td { background: #f7f9f8; }
+        footer { padding: 22px 44px; color: #e5f0ee; background: var(--teal-dark); }
+        footer a { color: #f6d684; }
+        @media (max-width: 700px) {
+            body { padding: 0; }
+            .page { border: 0; border-radius: 0; }
+            .masthead { padding: 28px 22px 24px; }
+            .masthead h1 { font-size: 1.8rem; }
+            .top-links, .topic-nav { padding: 14px 22px; }
+            main { padding: 2px 22px 32px; }
+            footer { padding: 20px 22px; }
+            h2 { font-size: 1.35rem; }
+            th, td { min-width: 130px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+            .print-button:hover, .print-button:active { transform: none; }
+        }
+        @media print {
+            @page { margin: 16mm; }
+            html { scroll-behavior: auto; }
+            body {
+                padding: 0;
+                color: #111;
+                background: white;
+                font-size: 10.5pt;
+            }
+            .page {
+                width: 100%;
+                overflow: visible;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .top-links, .topic-nav, .print-button { display: none !important; }
+            main { padding: 0; }
+            section { padding-top: 8px; scroll-margin-top: 0; }
+            h2, h3, h4 { break-after: avoid; }
+            .panel, .note, .demo, .demo-surface, .dhtml-card {
+                break-inside: avoid;
+                box-shadow: none;
+            }
+            pre, table { break-inside: avoid; }
+            pre {
+                overflow: visible;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
+                color: #111;
+                background: #f2f4f5;
+            }
+            pre code { color: #111; }
+            th { color: #111; background: #e5eaee; }
+            tr:nth-child(even) td { background: #f6f7f8; }
+            footer { padding: 14px 0 0; color: #111; background: white; }
+            footer a { color: #075752; }
+            a { color: #075752; text-decoration: underline; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="masthead">
+            <p class="course-label">Web Technologies | C2111C3 | Unit 4 | 15 Contact Hours</p>
+            <h1>JavaScript and jQuery</h1>
+            <p>A syllabus-aligned guide to client-side programming, objects, the DOM, forms, events, DHTML, AJAX, and jQuery, with interactive examples.</p>
+            <p><strong>Reference:</strong> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction" target="_blank" rel="noopener noreferrer">MDN JavaScript Guide: Introduction</a></p>
+        </header>
+
+        <nav class="top-links" aria-label="Related course pages">
+            <a href="course_portal.html#unit4">Course portal: Unit 4</a>
+            <a href="Syllabus.html">Full syllabus</a>
+            <a href="unit1_intro_to_www.html">Unit 1: WWW</a>
+            <a href="unit2_html.html">Unit 2: HTML</a>
+            <a href="unit3_css_final.html">Unit 3: CSS</a>
+            <a href="unit4_javascript_jquery.html">Unit 4: JavaScript and jQuery</a>
+            <a href="unit5_xml.html">Unit 5: XML</a>
+            <a href="unit6_php.html">Unit 6: PHP</a>
+            <button class="print-button" id="download-pdf" type="button">Download as PDF</button>
+        </nav>
+        <nav class="topic-nav" aria-label="Jump to a topic">
+            <a href="#javascript-basics">JavaScript basics</a>
+            <a href="#objects-dom">Objects and DOM</a>
+            <a href="#forms-validation">Forms and validation</a>
+            <a href="#dhtml">DHTML</a>
+            <a href="#events">Events and buttons</a>
+            <a href="#ajax">AJAX</a>
+            <a href="#jquery">jQuery</a>
+        </nav>
+
+        <main>
+            <section id="javascript-basics">
+                <h2><span class="topic-number">01</span>Client-Side Scripting with JavaScript</h2>
+                <p class="lead">JavaScript runs in the browser and responds to user actions. It can calculate values, choose what happens next, and update the current page without rebuilding its HTML by hand. In a web application, JavaScript is what turns a static page into an interactive interface: it validates entries, changes text, reveals tabs, adds animations, and fetches new data from a server.</p>
+                <p>According to the MDN JavaScript introduction, JavaScript is a high-level, dynamic scripting language that can be used to control the behavior of a web page. It is not the same as HTML or CSS: HTML gives structure, CSS gives presentation, and JavaScript gives behavior. It is one of the core technologies of the web and is run by every modern browser.</p>
+                <p>At the core of JavaScript are a few fundamental ideas. Variables store information, conditions let the program make decisions, loops repeat tasks, and functions package reusable logic. These concepts are the building blocks of every event-driven interaction in web development. For example, a course portal may use a variable to hold the selected unit, an <code>if</code> statement to decide which content to display, and a function to update the page when a student clicks a button.</p>
+                <div class="note"><strong>JavaScript building blocks:</strong> values, variables, operators, expressions, control flow, functions, objects, arrays, and the browser APIs such as <code>document</code> and <code>window</code>.</div>
+                <div class="grid">
+                    <article class="panel"><h4>Variables and values</h4><p>Use <code>const</code> for bindings that will not be reassigned and <code>let</code> when reassignment is needed. Values can be strings, numbers, booleans, arrays, objects, or <code>null</code>.</p></article>
+                    <article class="panel"><h4>Conditions</h4><p><code>if</code>, <code>else if</code>, and <code>else</code> choose a branch based on a true-or-false expression. They are used for testing validity, checking selections, and controlling the flow of a program.</p></article>
+                    <article class="panel"><h4>Loops</h4><p><code>for</code> and <code>while</code> repeat work. Use <code>for...of</code> to visit each value in an iterable such as an array, which is common when printing lists, updating scores, or reading data.</p></article>
+                    <article class="panel"><h4>Functions</h4><p>Functions package reusable instructions. They can receive parameters and return a result, reducing repetition and making code easier to read and maintain.</p></article>
+                </div>
+
+                <h3>JavaScript Data Types</h3>
+                <p>A data type describes the kind of value a variable contains and the operations that make sense for it. JavaScript is dynamically typed: a variable can hold values of different types at different times, and you do not write a type declaration when creating it. Use <code>typeof</code> to inspect many values while learning or debugging.</p>
+                <table>
+                    <thead><tr><th>Category</th><th>Type</th><th>Example</th><th>What it represents</th></tr></thead>
+                    <tbody>
+                        <tr><td>Primitive</td><td>String</td><td><code>"Web Technologies"</code></td><td>Text, written inside quotes or backticks.</td></tr>
+                        <tr><td>Primitive</td><td>Number</td><td><code>42</code>, <code>3.14</code></td><td>Integers and decimal values. Special numeric values include <code>NaN</code> and <code>Infinity</code>.</td></tr>
+                        <tr><td>Primitive</td><td>BigInt</td><td><code>9007199254740993n</code></td><td>Very large integers; an integer literal uses the <code>n</code> suffix.</td></tr>
+                        <tr><td>Primitive</td><td>Boolean</td><td><code>true</code>, <code>false</code></td><td>A logical yes/no value, often used in conditions.</td></tr>
+                        <tr><td>Primitive</td><td>Undefined</td><td><code>undefined</code></td><td>The value of a declared variable that has not been assigned a value.</td></tr>
+                        <tr><td>Primitive</td><td>Null</td><td><code>null</code></td><td>An intentional absence of a value.</td></tr>
+                        <tr><td>Primitive</td><td>Symbol</td><td><code>Symbol("id")</code></td><td>A unique value, mainly used as a distinctive object property key.</td></tr>
+                        <tr><td>Non-primitive</td><td>Object</td><td><code>{ name: "Asha" }</code></td><td>A collection of related properties. Arrays and functions are also object types in JavaScript.</td></tr>
+                    </tbody>
+                </table>
+                <pre><code>const studentName = "Asha";       // string
+const score = 85;                 // number
+const isEnrolled = true;          // boolean
+let selectedCourse;               // undefined
+const missingValue = null;        // intentional absence
+const subjects = ["HTML", "CSS"]; // array (an object)
+const student = { name: studentName, score: score }; // object
+
+console.log(typeof studentName);  // "string"
+console.log(typeof score);        // "number"
+console.log(typeof isEnrolled);   // "boolean"
+console.log(typeof selectedCourse); // "undefined"
+console.log(typeof subjects);     // "object"
+console.log(typeof null);          // "object" (a historical JavaScript quirk)</code></pre>
+                <div class="note"><strong>Remember:</strong> <code>typeof null</code> returns <code>"object"</code> for historical reasons, even though <code>null</code> is a primitive. Arrays also report <code>"object"</code>; use <code>Array.isArray(value)</code> to check whether a value is an array. Functions have their own <code>typeof</code> result: <code>"function"</code>.</div>
+
+                <h3>More Coding Examples</h3>
+
+                <h4>1. Variables</h4>
+<pre><code>const studentName = "Asha";
+let marks = 78;
+let isPass = marks >= 40;
+
+console.log(studentName); // Asha
+console.log(marks);       // 78
+console.log(isPass);      // true
+
+marks = marks + 7;
+console.log(marks);       // 85</code></pre>
+                <p>A variable stores data so the program can use it later. <code>const</code> is used when the value should not change, while <code>let</code> is used when the value may be updated during execution.</p>
+
+                <h4>2. Conditions and Logic</h4>
+<pre><code>const age = 20;
+const feesPaid = true;
+
+if (age >= 18 && feesPaid) {
+    console.log("Student can register");
+} else if (age >= 18 && !feesPaid) {
+    console.log("Please pay the fees");
+} else {
+    console.log("Student is not eligible");
+}
+
+const result = (age >= 18) ? "Adult" : "Minor";
+console.log(result); // Adult</code></pre>
+                <p>Conditions help decide what action the program should take. Logical operators such as <code>&&</code> (AND), <code>||</code> (OR), and <code>!</code> (NOT) combine multiple checks into one decision.</p>
+
+                <h4>3. Loops and Logic</h4>
+<pre><code>const subjects = ["HTML", "CSS", "JavaScript", "PHP"];
+
+for (let i = 0; i < subjects.length; i++) {
+    console.log("Subject " + i + ": " + subjects[i]);
+}
+
+let total = 0;
+for (const subject of subjects) {
+    total += 1;
+}
+console.log("Total subjects = " + total); // 4
+
+let count = 1;
+while (count <= 3) {
+    console.log("Loop count = " + count);
+    count++;
+}</code></pre>
+                <p>Loops repeat a block of instructions until a condition is met. They are useful when processing lists, printing results, or checking multiple items one by one.</p>
+
+                <h4>4. Functions</h4>
+<pre><code>function calculateTotal(price, quantity) {
+    return price * quantity;
+}
+
+const bill = calculateTotal(120, 3);
+console.log(bill); // 360
+
+function greet(student) {
+    return "Welcome, " + student + "!";
+}
+
+console.log(greet("Asha")); // Welcome, Asha!</code></pre>
+                <p>Functions are reusable blocks of code. They make programs easier to manage because a task can be written once and used many times instead of repeating the same code in different places.</p>
+
+                <h4>5. Popup Boxes</h4>
+<pre><code>alert("Welcome to the Web Technologies lab!");
+
+const proceed = confirm("Do you want to continue?");
+if (proceed) {
+    console.log("User clicked OK");
+} else {
+    console.log("User clicked Cancel");
+}
+
+const name = prompt("Enter your name:");
+console.log("Hello, " + name);</code></pre>
+                <p>Popup boxes are used for simple interaction and testing. <code>alert()</code> shows a message, <code>confirm()</code> asks for a yes/no answer, and <code>prompt()</code> receives a short text input from the user.</p>
+
+<pre><code>const course = "Web Technologies";
+let score = 0;
+
+if (score >= 50) {
+    console.log("Pass");
+} else {
+    console.log("Keep practising");
+}
+
+for (const topic of ["variables", "loops", "functions"]) {
+    console.log(topic);
+}
+
+function addMarks(current, extra) {
+    return current + extra;
+}
+score = addMarks(score, 10);</code></pre>
+                <h3>Popup Boxes</h3>
+                <p>Browsers provide <code>alert()</code> for a message, <code>confirm()</code> for a yes/no decision, and <code>prompt()</code> for a short text response. They are useful for simple demonstrations, but custom page UI is usually less disruptive in real applications. The main reason to learn them is to understand how JavaScript interacts with browser windows and user decisions; in production, developers usually create their own styled interface elements instead of relying on native dialogs.</p>
+                <div class="demo">
+                    <button type="button" id="popup-button">Open an alert example</button>
+                    <p class="status" id="popup-status" aria-live="polite">The dialog opens only when you press the button.</p>
+                </div>
+<pre><code>alert("Welcome to Unit 4!");
+
+const wantsToContinue = confirm("Continue the example?");
+if (wantsToContinue) {
+    console.log("Continuing");
+}
+
+const name = prompt("What is your name?");</code></pre>
+            </section>
+
+            <section id="objects-dom">
+                <h2><span class="topic-number">02</span>JavaScript Objects and the DOM</h2>
+                <p>Objects group related data and behavior. The Document Object Model (DOM) represents an HTML document as a tree of nodes. JavaScript can find nodes, read or change their content, update attributes and classes, and create new elements. This is the heart of dynamic web pages: instead of static text, the browser script can modify a heading, change a button label, inject content into a list, or highlight a card after an action.</p>
+                <p>In MDN terms, an object is a collection of related properties and methods. For example, a student object can contain properties such as <code>name</code>, <code>rollNo</code>, and <code>department</code>, along with methods like <code>displayInfo()</code>. The DOM is a browser-created object model that exposes every HTML element as a JavaScript object. Because the DOM is a tree, JavaScript can traverse from a parent node to child nodes, update specific elements, and react to user events.</p>
+                <p>In real websites, the DOM is what lets the page respond to the user without reloading. A login form may check that the password field is valid, a shopping cart might update totals after a quantity change, and a dashboard may replace a chart when a user selects a different period. JavaScript uses object properties, method calls, and selector APIs to work with these elements.</p>
+<pre><code>const learner = {
+    name: "Asha",
+    unit: 4,
+    introduce() {
+        return `${this.name} is studying Unit ${this.unit}.`;
+    }
+};
+
+const message = document.querySelector("#message");
+message.textContent = learner.introduce();</code></pre>
+                <div class="demo">
+                    <div class="demo-grid">
+                        <div class="demo-surface">
+                            <span class="demo-label">DOM target</span>
+                            <div class="dom-card" id="dom-card">
+                                <h4 id="dom-title">This card is an HTML element</h4>
+                                <p id="dom-description">JavaScript can change these text nodes and classes.</p>
+                            </div>
+                        </div>
+                        <div class="demo-surface">
+                            <span class="demo-label">Try DOM methods</span>
+                            <button type="button" id="dom-update">Update the card</button>
+                            <button type="button" class="button-secondary" id="dom-reset">Reset</button>
+                            <p class="status" id="dom-status" aria-live="polite">The buttons select and update DOM elements.</p>
+                        </div>
+                    </div>
+                </div>
+                <h3>Common DOM Operations</h3>
+                <table>
+                    <thead><tr><th>Operation</th><th>Example</th><th>Use</th></tr></thead>
+                    <tbody>
+                        <tr><td>Select an element</td><td><code>document.querySelector(".notice")</code></td><td>Find the first element matching a CSS selector.</td></tr>
+                        <tr><td>Read or set text</td><td><code>element.textContent = "Updated"</code></td><td>Change text without parsing it as HTML.</td></tr>
+                        <tr><td>Change a class</td><td><code>element.classList.toggle("active")</code></td><td>Connect behavior to CSS presentation.</td></tr>
+                        <tr><td>Create and add an element</td><td><code>list.append(newItem)</code></td><td>Build or extend page content.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="forms-validation">
+                <h2><span class="topic-number">03</span>Forms and Validation</h2>
+                <p>Form validation checks user input before an application accepts or sends it. HTML provides basic constraints such as <code>required</code>, <code>type="email"</code>, and <code>minlength</code>; JavaScript can add application-specific checks and feedback. The purpose is not simply to block mistakes; it is to guide the user, reduce errors, and save server resources by stopping bad data before it is submitted.</p>
+                <p>Typical validation includes checking that a field is not empty, that a password is long enough, that the email format matches expected syntax, and that required values are selected. In browser-side validation, JavaScript can show custom error messages and highlight the wrong input, while HTML attributes provide quick built-in rules. The browser also supports validation APIs such as <code>checkValidity()</code>, <code>validity</code>, and <code>setCustomValidity()</code>, which let developers combine built-in rules with custom business logic. However, because a user can disable JavaScript or send data directly to a server, final checks must still happen on the server side as part of secure application design.</p>
+                <h3>HTML Validation Rules</h3>
+                <p>Start with HTML attributes whenever possible. They describe the expected input directly in the markup, work with browser and assistive-technology features, and reduce the amount of JavaScript needed. The browser checks these constraints when a form is submitted unless validation is disabled with the <code>novalidate</code> attribute.</p>
+                <table>
+                    <thead><tr><th>Attribute</th><th>Example</th><th>What it checks</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>required</code></td><td><code>&lt;input required&gt;</code></td><td>A value must be entered or selected.</td></tr>
+                        <tr><td><code>type</code></td><td><code>&lt;input type="email"&gt;</code></td><td>Uses an input suited to the data and checks basic formats such as email or URL.</td></tr>
+                        <tr><td><code>minlength</code> / <code>maxlength</code></td><td><code>&lt;input minlength="2" maxlength="40"&gt;</code></td><td>Sets allowed text length.</td></tr>
+                        <tr><td><code>min</code> / <code>max</code> / <code>step</code></td><td><code>&lt;input type="number" min="1" max="10" step="1"&gt;</code></td><td>Limits numeric or date values and permitted increments.</td></tr>
+                        <tr><td><code>pattern</code></td><td><code>&lt;input pattern="[A-Z]{2}[0-9]{4}"&gt;</code></td><td>Requires text to match a regular-expression pattern.</td></tr>
+                    </tbody>
+                </table>
+                <h3>Validation Flow</h3>
+                <ol>
+                    <li>Collect the values when the user submits the form.</li>
+                    <li>Check basic constraints, such as required fields and valid input types.</li>
+                    <li>Apply any extra rules specific to the application, then explain how to correct errors.</li>
+                    <li>Only continue with submission when the values pass; validate them again on the server.</li>
+                </ol>
+                <p>For custom checks, <code>checkValidity()</code> returns <code>true</code> when all constraints pass. <code>reportValidity()</code> asks the browser to display its validation feedback. The <code>validity</code> property gives details such as whether a value is missing or has the wrong format, and <code>setCustomValidity(message)</code> can add a custom error. Clear a custom error by calling <code>setCustomValidity("")</code> when the value becomes valid.</p>
+                <div class="note"><strong>Important:</strong> Client-side validation improves feedback but is not a security boundary. A server must validate submitted data too.</div>
+<pre><code>form.addEventListener("submit", (event) =&gt; {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        message.textContent = "Please correct the highlighted fields.";
+        return;
+    }
+
+    message.textContent = "Form is ready to submit.";
+});</code></pre>
+                <p>This example prevents the default page reload so the script can check the fields first. In a real application, the valid branch would send the form data to a server; this page's demo only displays a confirmation message. Keep labels connected to inputs and make error feedback clear, as the demo does with a message announced through <code>aria-live</code>.</p>
+                <div class="demo">
+                    <form class="form-demo" id="contact-demo" novalidate>
+                        <label for="student-name">Name</label>
+                        <input id="student-name" name="studentName" autocomplete="name" required minlength="2">
+                        <label for="student-email">Email</label>
+                        <input id="student-email" name="studentEmail" type="email" autocomplete="email" required>
+                        <p class="form-message" id="form-message" aria-live="polite">Enter a name and a valid email address, then submit.</p>
+                        <button type="submit">Check the form</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="dhtml">
+                <h2><span class="topic-number">04</span>DHTML: HTML, CSS, and JavaScript Together</h2>
+                <p>DHTML, short for Dynamic HTML, is a descriptive term for using HTML, CSS, and JavaScript together to make a page respond to changes and user actions. It is not a separate programming language, browser feature, or software package. HTML supplies the elements and meaning, CSS controls their appearance, and JavaScript uses the DOM and browser events to update content or state while the page is open.</p>
+                <p>For example, an online learning page might use HTML to create a course card and a button, CSS to define the card's normal and highlighted appearances, and JavaScript to respond when the button is activated. JavaScript usually changes the DOM, often by adding or removing a CSS class; the browser then applies the matching CSS rules and redraws the affected part of the page. This targeted update can happen without rebuilding the document or reloading the whole page.</p>
+                <div class="grid">
+                    <article class="panel"><h4>HTML: structure and meaning</h4><p>Creates semantic elements such as headings, cards, forms, and buttons that users and assistive technologies can understand.</p></article>
+                    <article class="panel"><h4>CSS: presentation</h4><p>Defines layout, colors, spacing, and visual states. A class lets the same element have different styles without mixing style rules into JavaScript.</p></article>
+                    <article class="panel"><h4>JavaScript: behavior</h4><p>Listens for events, makes decisions, and updates DOM content, attributes, or classes in response.</p></article>
+                </div>
+                <h3>How a DHTML Interaction Works</h3>
+                <ol>
+                    <li>The browser reads the HTML and creates a DOM tree of elements.</li>
+                    <li>The browser applies CSS rules to determine how those elements look.</li>
+                    <li>JavaScript finds the relevant elements and registers an event listener.</li>
+                    <li>When the event occurs, JavaScript updates the DOM; the browser applies the changed styles and renders the result.</li>
+                </ol>
+                <h3>One Example, Three Technologies</h3>
+                <p>These snippets work together: the button is part of the HTML, the <code>is-active</code> class describes a CSS state, and JavaScript toggles that class when the button is clicked.</p>
+                <h4>1. HTML creates the elements</h4>
+<pre><code>&lt;div class="dhtml-card" id="dhtml-card"&gt;
+    &lt;h4&gt;Interactive course card&lt;/h4&gt;
+    &lt;p&gt;Press the button to highlight this card.&lt;/p&gt;
+&lt;/div&gt;
+&lt;button type="button" id="dhtml-toggle"&gt;Toggle highlight&lt;/button&gt;</code></pre>
+                <h4>2. CSS defines the visual state</h4>
+<pre><code>.dhtml-card {
+    padding: 16px;
+    background: #f1f5f5;
+}
+
+.dhtml-card.is-active {
+    color: white;
+    background: #087e78;
+}</code></pre>
+                <h4>3. JavaScript connects the click to the state change</h4>
+<pre><code>const card = document.querySelector("#dhtml-card");
+const toggleButton = document.querySelector("#dhtml-toggle");
+
+toggleButton.addEventListener("click", () =&gt; {
+    card.classList.toggle("is-active");
+});</code></pre>
+                <div class="note"><strong>Good practice:</strong> Keep content in HTML, visual rules in CSS, and interaction logic in JavaScript. Updating a class with <code>classList</code> keeps these responsibilities separate and makes the behavior easier to maintain. Use semantic HTML controls, such as a real <code>&lt;button&gt;</code>, so the interaction also works with a keyboard.</div>
+                <div class="demo">
+                    <div class="demo-grid">
+                        <div class="demo-surface">
+                            <span class="demo-label">HTML element styled by CSS</span>
+                            <div class="dhtml-card" id="dhtml-card">
+                                <h4>Interactive course card</h4>
+                                <p>Its appearance changes when JavaScript toggles a class.</p>
+                            </div>
+                        </div>
+                        <div class="demo-surface">
+                            <span class="demo-label">JavaScript event</span>
+                            <button type="button" id="dhtml-toggle">Toggle highlighted state</button>
+                            <p class="status" id="dhtml-status" aria-live="polite">Current state: normal</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="events">
+                <h2><span class="topic-number">05</span>Events and Buttons</h2>
+                <p>An event is something that happens in the browser, such as a click, key press, form submission, or page load. An event listener connects an event to a function. Prefer <code>addEventListener()</code> so behavior remains separate from HTML structure and several listeners can be attached without mixing logic into inline markup. This separation is a key principle of maintainable front-end code.</p>
+                <p>When a user interacts with the page, the browser creates an event object that contains useful information such as which element was clicked and what type of event occurred. Developers can inspect that object to decide how to respond. This is the foundation for features such as form validation, drag-and-drop interfaces, button-based actions, keyboard shortcuts, and interactive charts.</p>
+                <div class="grid">
+                    <article class="panel"><h4><code>click</code></h4><p>Button activation, including keyboard activation for native buttons.</p></article>
+                    <article class="panel"><h4><code>input</code></h4><p>Fires as a user edits an input value and is useful for real-time validation.</p></article>
+                    <article class="panel"><h4><code>submit</code></h4><p>Fires when a form is submitted; useful for validation and handling.</p></article>
+                    <article class="panel"><h4>Event object</h4><p>Provides details about the event and the element that received it, enabling targeted behavior.</p></article>
+                </div>
+<pre><code>button.addEventListener("click", (event) =&gt; {
+    console.log("Activated:", event.currentTarget);
+    count += 1;
+    output.textContent = count;
+});</code></pre>
+                <div class="demo">
+                    <span class="demo-label">Click to fire an event listener</span>
+                    <button type="button" id="count-button">Add one</button>
+                    <output class="event-output" id="count-output" aria-live="polite">0</output>
+                    <button type="button" class="button-secondary" id="count-reset">Reset</button>
+                </div>
+            </section>
+
+            <section id="ajax">
+                <h2><span class="topic-number">06</span>AJAX and Asynchronous Web Applications</h2>
+                <p>AJAX stands for Asynchronous JavaScript and XML. The name comes from an earlier period of web development, when XML was a common response format. Today, AJAX describes the broader technique of sending an HTTP request from JavaScript and updating part of the page with the response, without loading a new document. JSON is common, but a response can also be text, HTML, XML, or another resource type.</p>
+                <p>This pattern is useful when only one part of a page needs new information: searching a catalog, refreshing messages, checking a username, or submitting a form. It can reduce unnecessary page reloads and data transfer. The browser still needs a server or API to provide real data; AJAX is the communication pattern, not a server or database by itself.</p>
+                <h3>Request and Response Cycle</h3>
+                <ol>
+                    <li>A user action or another event starts a request to a server URL, often called an endpoint.</li>
+                    <li>The browser sends the request, usually with a method such as <code>GET</code> to retrieve data or <code>POST</code> to send data.</li>
+                    <li>The server returns a response containing a status and, when appropriate, a body such as JSON or text.</li>
+                    <li>JavaScript checks the response, reads the body, and updates the needed DOM elements.</li>
+                    <li>The rest of the document stays in place; the interface can show loading, success, or error feedback along the way.</li>
+                </ol>
+                <h3>What Asynchronous Means</h3>
+                <p>A synchronous operation makes the next step wait for the current one to finish. A network request can take a noticeable amount of time, so browser APIs such as <code>fetch()</code> work asynchronously: they return a <code>Promise</code> representing work that will finish later. While the browser handles the network activity, JavaScript can continue responding to events and the page can remain interactive.</p>
+                <p>When the response arrives, the promise is fulfilled with a <code>Response</code>, or rejected for a network-level problem. The response body is read separately and asynchronously. An <code>async</code> function lets us write this sequence with <code>await</code>; <code>await</code> pauses that function until its promise settles, not the whole browser interface. Asynchronous does not mean that every JavaScript instruction runs in parallel.</p>
+                <h3>Using Fetch and Handling Errors</h3>
+                <p><code>fetch()</code> is the modern browser API for HTTP requests. A successful call gives JavaScript a response object, but an HTTP error status such as <code>404</code> or <code>500</code> does not normally reject the fetch promise. Check <code>response.ok</code> before reading the body. Then use <code>response.json()</code> for JSON; it returns a promise too, and it can fail if the body is not valid JSON.</p>
+<pre><code>async function loadCourses() {
+    status.textContent = "Loading courses...";
+
+    try {
+        const response = await fetch("/api/courses");
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+
+        const courses = await response.json();
+        output.textContent = courses.map((course) =&gt; course.name).join(", ");
+        status.textContent = "Courses loaded.";
+    } catch (error) {
+        status.textContent = "Could not load courses. Check the connection and try again.";
+        console.error(error);
+    }
+}
+
+loadCourses();</code></pre>
+                <p>In this example, <code>/api/courses</code> is a placeholder endpoint. It must exist and return JSON containing an array of course objects with a <code>name</code> property. The <code>try...catch</code> handles network errors, non-success HTTP statuses that we explicitly turn into errors, and problems reading or parsing the response body.</p>
+                <div class="note"><strong>Cross-origin requests:</strong> A page can usually request resources from its own origin. If an API is hosted on a different origin, the server must allow the page through Cross-Origin Resource Sharing (CORS). This is a browser security rule; adding <code>mode: "no-cors"</code> is not a general fix because it produces an opaque response that JavaScript cannot read normally.</div>
+                <div class="note"><strong>About this page's demo:</strong> The button does not contact a server. It uses <code>setTimeout()</code> to wait 650 ms, then displays a hard-coded JavaScript object. This safely demonstrates a loading state and an update without a server; the Fetch example above illustrates a real request and needs a working endpoint.</div>
+                <div class="demo">
+                    <div class="demo-grid">
+                        <div class="demo-surface">
+                            <span class="demo-label">AJAX-style update without page reload</span>
+                            <button type="button" id="ajax-button">Load sample course data</button>
+                            <p class="status" id="ajax-status" aria-live="polite">Waiting for a request.</p>
+                        </div>
+                        <div class="demo-surface">
+                            <span class="demo-label">Updated page region</span>
+                            <div class="feed-output" id="ajax-output" aria-live="polite">No data loaded yet.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="jquery">
+                <h2><span class="topic-number">07</span>Introduction to jQuery</h2>
+                <p>jQuery is a JavaScript library that offers concise APIs for selecting elements, handling events, updating the DOM, effects, and AJAX. It was especially valuable when browser differences required extra compatibility work. Modern browsers provide many equivalent capabilities directly, but jQuery remains in existing projects and is useful to recognize because many older codebases still use it and many students need to read it when maintaining legacy websites.</p>
+                <p>The main advantage of jQuery is readability and shorter code. Instead of writing several DOM API calls, a developer can select an element with a CSS-style expression and change its content or classes in a single chained statement. It also simplified event-driven programming and AJAX by providing consistent behavior across browsers at a time when JavaScript support varied significantly.</p>
+                <div class="grid">
+                    <article class="panel"><h4>Select elements</h4><p><code>$(".notice")</code> selects elements using familiar CSS selector syntax.</p></article>
+                    <article class="panel"><h4>Wait for the DOM</h4><p><code>$(function () { ... })</code> runs after the document is ready to be manipulated.</p></article>
+                    <article class="panel"><h4>Handle events</h4><p><code>.on("click", handler)</code> attaches an event listener.</p></article>
+                    <article class="panel"><h4>Update content</h4><p>Methods such as <code>.text()</code>, <code>.addClass()</code>, and <code>.toggleClass()</code> manipulate selected elements.</p></article>
+                </div>
+                <table>
+                    <thead><tr><th>Task</th><th>Vanilla JavaScript</th><th>jQuery</th></tr></thead>
+                    <tbody>
+                        <tr><td>Select an element</td><td><code>document.querySelector("#message")</code></td><td><code>$("#message")</code></td></tr>
+                        <tr><td>Listen for a click</td><td><code>element.addEventListener("click", handler)</code></td><td><code>$(element).on("click", handler)</code></td></tr>
+                        <tr><td>Set text content</td><td><code>element.textContent = "Hello"</code></td><td><code>$(element).text("Hello")</code></td></tr>
+                        <tr><td>Toggle a class</td><td><code>element.classList.toggle("active")</code></td><td><code>$(element).toggleClass("active")</code></td></tr>
+                    </tbody>
+                </table>
+<pre><code>// Include the jQuery library before running this script.
+$(function () {
+    $("#jquery-button").on("click", function () {
+        $("#jquery-message")
+            .text("Updated by a jQuery event handler.")
+            .toggleClass("is-highlighted");
+    });
+});</code></pre>
+                <div class="note"><strong>Simple understanding:</strong> jQuery works with the same DOM concepts as vanilla JavaScript, but the API is shorter and more chain-based. A student should learn the JavaScript DOM model first, because jQuery is easier to understand once the browser object model is already familiar.</div>
+                <div class="note"><strong>Dependency:</strong> jQuery is a library and must be included in a project before its API can run. This page does not require a network connection or load jQuery to display the comparisons above.</div>
+            </section>
+
+            <section id="recap">
+                <h2>Unit 4 Recap</h2>
+                <ol>
+                    <li>JavaScript provides variables, decisions, loops, functions, and simple popup APIs.</li>
+                    <li>Objects group values and methods; the DOM lets scripts inspect and update a document.</li>
+                    <li>Validate forms in the browser for usability, and repeat validation on the server for security.</li>
+                    <li>DHTML describes the combination of HTML, CSS, and JavaScript; events connect user actions to code.</li>
+                    <li>AJAX updates page regions asynchronously; JSON is common even though the name says XML.</li>
+                    <li>jQuery is a library for DOM, event, effect, and request operations; modern JavaScript has native alternatives.</li>
+                </ol>
+            </section>
+
+            <section id="beginner-summary">
+                <h2>Short Beginner-Friendly Summary</h2>
+                <p>JavaScript is the language that makes a web page interactive. It helps us store data in variables, check conditions, repeat actions using loops, and reuse logic using functions. We can respond to user actions like clicks and form submissions through events, and we can change page content with the DOM. JavaScript is also used to validate forms, fetch data from a server, and build dynamic experiences in websites and applications.</p>
+                <p>For a beginner, the most important idea is this: HTML defines what is on the page, CSS decides how it looks, and JavaScript decides what happens when the user interacts with it. Once you understand this, most JavaScript topics become easier to learn.</p>
+            </section>
+
+            <section id="must-learn-checklist">
+                <h2>Must-Learn JavaScript Topics for First Year</h2>
+                <div class="note">
+                    <strong>Checklist:</strong>
+                    <ul>
+                        <li><input type="checkbox"> Variables: let, const</li>
+                        <li><input type="checkbox"> Data types: string, number, boolean, array, object</li>
+                        <li><input type="checkbox"> Operators: arithmetic, comparison, logical</li>
+                        <li><input type="checkbox"> Conditions: <code>if</code>, <code>else if</code>, <code>else</code></li>
+                        <li><input type="checkbox"> Loops: <code>for</code>, <code>while</code>, <code>for...of</code></li>
+                        <li><input type="checkbox"> Functions and parameters</li>
+                        <li><input type="checkbox"> Return values and function reuse</li>
+                        <li><input type="checkbox"> Events and <code>addEventListener()</code></li>
+                        <li><input type="checkbox"> DOM selection and manipulation</li>
+                        <li><input type="checkbox"> Form validation basics</li>
+                        <li><input type="checkbox"> Arrays and object handling</li>
+                        <li><input type="checkbox"> Simple AJAX / <code>fetch()</code> understanding</li>
+                        <li><input type="checkbox"> Basic jQuery recognition and usage</li>
+                        <li><input type="checkbox"> Debugging using browser console</li>
+                        <li><input type="checkbox"> Writing small programs and mini projects</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <strong>Course links:</strong>
+            <a href="course_portal.html#unit4">Unit 4 in the course portal</a> |
+            <a href="Syllabus.html">Full syllabus</a> |
+            <a href="unit3_css_final.html">Unit 3 CSS study guide</a>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelector("#download-pdf").addEventListener("click", () => {
+            window.print();
+        });
+
+        const popupButton = document.querySelector("#popup-button");
+        popupButton.addEventListener("click", () => {
+            window.alert("Welcome to the Unit 4 JavaScript examples!");
+            document.querySelector("#popup-status").textContent = "The alert dialog was closed.";
+        });
+
+        const domCard = document.querySelector("#dom-card");
+        document.querySelector("#dom-update").addEventListener("click", () => {
+            document.querySelector("#dom-title").textContent = "The DOM has been updated";
+            document.querySelector("#dom-description").textContent = "JavaScript changed textContent and added a CSS class.";
+            domCard.classList.add("is-highlighted");
+            document.querySelector("#dom-status").textContent = "Updated with querySelector, textContent, and classList.";
+        });
+        document.querySelector("#dom-reset").addEventListener("click", () => {
+            document.querySelector("#dom-title").textContent = "This card is an HTML element";
+            document.querySelector("#dom-description").textContent = "JavaScript can change these text nodes and classes.";
+            domCard.classList.remove("is-highlighted");
+            document.querySelector("#dom-status").textContent = "The card has been reset.";
+        });
+
+        document.querySelector("#contact-demo").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const name = document.querySelector("#student-name").value.trim();
+            const email = document.querySelector("#student-email");
+            const message = document.querySelector("#form-message");
+            message.classList.remove("error", "success");
+
+            if (name.length < 2 || !email.value.trim() || !email.checkValidity()) {
+                message.textContent = "Enter a name with at least 2 characters and a valid email.";
+                message.classList.add("error");
+                return;
+            }
+
+            message.textContent = `Looks good, ${name}. This demo does not send data to a server.`;
+            message.classList.add("success");
+        });
+
+        const dhtmlCard = document.querySelector("#dhtml-card");
+        document.querySelector("#dhtml-toggle").addEventListener("click", () => {
+            const isActive = dhtmlCard.classList.toggle("is-active");
+            document.querySelector("#dhtml-status").textContent = `Current state: ${isActive ? "highlighted" : "normal"}`;
+        });
+
+        let count = 0;
+        const countOutput = document.querySelector("#count-output");
+        document.querySelector("#count-button").addEventListener("click", (event) => {
+            count += 1;
+            countOutput.textContent = count;
+            event.currentTarget.setAttribute("aria-label", `Add one. Current count ${count}`);
+        });
+        document.querySelector("#count-reset").addEventListener("click", () => {
+            count = 0;
+            countOutput.textContent = count;
+            document.querySelector("#count-button").setAttribute("aria-label", "Add one");
+        });
+
+        document.querySelector("#ajax-button").addEventListener("click", (event) => {
+            const button = event.currentTarget;
+            const status = document.querySelector("#ajax-status");
+            const output = document.querySelector("#ajax-output");
+            button.disabled = true;
+            status.textContent = "Loading sample data...";
+            output.textContent = "Waiting for the simulated response.";
+
+            window.setTimeout(() => {
+                const sampleResponse = { course: "Web Technologies", unit: 4, topic: "AJAX" };
+                output.textContent = `${sampleResponse.course} | Unit ${sampleResponse.unit} | ${sampleResponse.topic}`;
+                status.textContent = "Sample response received without reloading the page.";
+                button.disabled = false;
+            }, 650);
+        });
+    </script>
+</body>
+</html>

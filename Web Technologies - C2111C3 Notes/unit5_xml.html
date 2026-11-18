@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detailed Unit 5 study guide to XML, its components, DTD, XML Schema, XSL, and XSLT, with executable examples.">
+    <title>Unit 5: XML Study Guide</title>
+    <style>
+        :root {
+            --ink: #23343a;
+            --teal: #087e78;
+            --teal-dark: #075752;
+            --coral: #d95e45;
+            --gold: #efbd4b;
+            --green: #36775a;
+            --paper: #ffffff;
+            --page: #edf2ef;
+            --soft-teal: #e6f4f1;
+            --soft-coral: #fbede9;
+            --line: #d8e2dd;
+            --code: #202a2d;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            padding: 24px;
+            color: var(--ink);
+            background: var(--page);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.65;
+        }
+        .page {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            overflow: hidden;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            box-shadow: 0 8px 28px rgba(7, 87, 82, 0.08);
+        }
+        .masthead {
+            padding: 38px 44px 30px;
+            color: white;
+            background: var(--teal-dark);
+            border-bottom: 6px solid var(--coral);
+        }
+        .course-label {
+            margin: 0 0 8px;
+            color: #f6d684;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .masthead h1 { max-width: 850px; margin: 0; font-size: 2.2rem; line-height: 1.2; }
+        .masthead p:last-child { max-width: 800px; margin: 14px 0 0; color: #e0f0ed; }
+        .masthead a { color: #f6d684; }
+        .top-links, .topic-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            padding: 15px 44px;
+            border-bottom: 1px solid var(--line);
+        }
+        .top-links { background: #f7f9f8; }
+        .topic-nav {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 2px 8px rgba(7, 87, 82, 0.06);
+        }
+        a { color: var(--teal-dark); }
+        .top-links a, .topic-nav a { font-weight: 650; }
+        .print-button {
+            padding: 9px 14px;
+            color: white;
+            background: var(--teal);
+            border: 1px solid var(--teal);
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 650;
+            cursor: pointer;
+            transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        }
+        .print-button:hover {
+            background: var(--teal-dark);
+            border-color: var(--teal-dark);
+            box-shadow: 0 3px 8px rgba(7, 87, 82, 0.2);
+            transform: translateY(-1px);
+        }
+        .print-button:active { box-shadow: none; transform: translateY(1px); }
+        .print-button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+        main { padding: 4px 44px 48px; }
+        section { padding-top: 24px; scroll-margin-top: 72px; }
+        h2 {
+            margin: 28px 0 14px;
+            color: var(--teal-dark);
+            font-size: 1.55rem;
+            line-height: 1.3;
+        }
+        h2 .topic-number {
+            display: inline-block;
+            margin-right: 8px;
+            color: var(--coral);
+            font-size: 0.85rem;
+            vertical-align: 0.15em;
+        }
+        h3 { margin: 26px 0 10px; color: var(--teal); font-size: 1.15rem; }
+        h4 { margin: 0 0 8px; color: var(--teal-dark); }
+        p { margin: 10px 0 15px; }
+        ul, ol { padding-left: 24px; }
+        li { margin: 6px 0; }
+        .lead { max-width: 900px; font-size: 1.08rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 18px 0; }
+        .panel {
+            min-width: 0;
+            padding: 18px;
+            background: #f7f9f8;
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--teal);
+        }
+        .panel p:last-child { margin-bottom: 0; }
+        .note { padding: 14px 16px; background: #fbf4df; border-left: 5px solid var(--gold); }
+        .note p:last-child { margin-bottom: 0; }
+        code {
+            padding: 1px 5px;
+            color: #8b2e50;
+            background: #f3edf0;
+            border-radius: 3px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.93em;
+            overflow-wrap: anywhere;
+        }
+        pre {
+            max-width: 100%;
+            margin: 14px 0 0;
+            padding: 16px 18px;
+            overflow-x: hidden;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            color: #e5edf3;
+            background: var(--code);
+            border-left: 4px solid var(--gold);
+            border-radius: 4px;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+        pre code { padding: 0; color: inherit; background: none; font-size: 0.9rem; }
+        .demo {
+            margin: 0 0 22px;
+            padding: 22px;
+            background: white;
+            border: 1px solid var(--line);
+            border-top: 0;
+            border-radius: 0 0 4px 4px;
+        }
+        .demo::before {
+            display: block;
+            margin: -22px -22px 18px;
+            padding: 5px 12px;
+            color: var(--teal-dark);
+            background: #fbf4df;
+            content: "TRY THE EXAMPLE";
+            font-size: 0.72rem;
+            font-weight: 750;
+        }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+        .demo-surface { min-width: 0; padding: 16px; background: #f8fbfa; border: 1px solid var(--line); }
+        .demo-surface > :first-child { margin-top: 0; }
+        .demo-surface > :last-child { margin-bottom: 0; }
+        .demo-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #586d69;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        button {
+            min-height: 42px;
+            margin: 4px 4px 4px 0;
+            padding: 9px 14px;
+            color: white;
+            background: var(--teal);
+            border: 0;
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 650;
+            cursor: pointer;
+        }
+        button:hover { background: var(--teal-dark); }
+        button:focus-visible, textarea:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+        .button-secondary { color: var(--teal-dark); background: var(--soft-teal); border: 1px solid #b6d9d1; }
+        .button-secondary:hover { color: white; }
+        .status { min-height: 1.7em; margin: 12px 0 0; color: var(--teal-dark); font-weight: 600; }
+        .status.error { color: #a1332a; }
+        textarea {
+            display: block;
+            width: 100%;
+            min-height: 260px;
+            padding: 12px;
+            color: #e5edf3;
+            background: var(--code);
+            border: 1px solid #516065;
+            border-radius: 4px;
+            font: 0.88rem/1.5 Consolas, "Courier New", monospace;
+            resize: vertical;
+            tab-size: 4;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+        .transform-editor textarea { min-height: 330px; }
+        .result-box {
+            min-height: 100px;
+            padding: 14px;
+            background: #f8fbfa;
+            border: 1px solid var(--line);
+            overflow-wrap: anywhere;
+        }
+        .result-box table { width: 100%; margin: 0; border-collapse: collapse; }
+        .result-box th, .result-box td { padding: 8px; border: 1px solid var(--line); text-align: left; }
+        .result-box th { color: white; background: var(--teal-dark); }
+        table { width: 100%; margin: 18px 0; border-collapse: collapse; }
+        th, td { padding: 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+        th { color: white; background: var(--teal-dark); }
+        tr:nth-child(even) td { background: #f7f9f8; }
+        footer { padding: 22px 44px; color: #e5f0ee; background: var(--teal-dark); }
+        footer a { color: #f6d684; }
+        @media (max-width: 700px) {
+            body { padding: 0; }
+            .page { border: 0; border-radius: 0; }
+            .masthead { padding: 28px 22px 24px; }
+            .masthead h1 { font-size: 1.8rem; }
+            .top-links, .topic-nav { padding: 14px 22px; }
+            main { padding: 2px 22px 32px; }
+            footer { padding: 20px 22px; }
+            h2 { font-size: 1.35rem; }
+            th, td { min-width: 130px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+            .print-button:hover, .print-button:active { transform: none; }
+        }
+        @media print {
+            @page { margin: 16mm; }
+            html { scroll-behavior: auto; }
+            body { padding: 0; color: #111; background: white; font-size: 10.5pt; }
+            .page {
+                width: 100%;
+                overflow: visible;
+                border: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            .top-links, .topic-nav, .print-button, .demo button { display: none !important; }
+            main { padding: 0; }
+            section { padding-top: 8px; scroll-margin-top: 0; }
+            h2, h3, h4 { break-after: avoid; }
+            .panel, .note, .demo-surface, .result-box { break-inside: avoid; box-shadow: none; }
+            .demo, pre, table { break-inside: auto; }
+            .transform-editor { grid-template-columns: 1fr; }
+            pre {
+                overflow: visible;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
+                color: #111;
+                background: #f2f4f5;
+            }
+            pre code { color: #111; }
+            textarea {
+                min-height: 0;
+                overflow: visible;
+                white-space: pre-wrap;
+                color: #111;
+                background: #f2f4f5;
+                border-color: #aebdb8;
+                resize: none;
+            }
+            .transform-editor textarea { min-height: 0; }
+            th { color: #111; background: #e5eaee; }
+            tr:nth-child(even) td { background: #f6f7f8; }
+            footer { padding: 14px 0 0; color: #111; background: white; }
+            footer a, a { color: #075752; text-decoration: underline; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="masthead">
+            <p class="course-label">Web Technologies | C2111C3 | Unit 5 | XML</p>
+            <h1>XML: Structure, Validation, and Transformation</h1>
+            <p>A detailed guide to XML documents, their building blocks, DTD and XML Schema validation, and transforming XML with XSLT. Includes browser-ready examples you can edit and run.</p>
+            <p><strong>References:</strong>
+                <a href="https://developer.mozilla.org/en-US/docs/Glossary/XML" target="_blank" rel="noopener noreferrer">MDN: XML</a> ·
+                <a href="https://www.w3schools.com/xml/default.asp" target="_blank" rel="noopener noreferrer">W3Schools: XML Tutorial</a>
+            </p>
+        </header>
+
+        <nav class="top-links" aria-label="Related course pages">
+            <a href="course_portal.html#unit5">Course portal: Unit 5</a>
+            <a href="Syllabus.html">Full syllabus</a>
+            <a href="unit1_intro_to_www.html">Unit 1: WWW</a>
+            <a href="unit2_html.html">Unit 2: HTML</a>
+            <a href="unit3_css_final.html">Unit 3: CSS</a>
+            <a href="unit4_javascript_jquery.html">Unit 4: JavaScript and jQuery</a>
+            <a href="unit5_xml.html">Unit 5: XML</a>
+            <a href="unit6_php.html">Unit 6: PHP</a>
+            <button class="print-button" id="download-pdf" type="button">Download as PDF</button>
+        </nav>
+        <nav class="topic-nav" aria-label="Jump to a topic">
+            <a href="#introduction">Introduction</a>
+            <a href="#components">Key components</a>
+            <a href="#validation">DTD and schemas</a>
+            <a href="#transformation">XSL and XSLT</a>
+        </nav>
+
+        <main>
+            <section id="introduction">
+                <h2><span class="topic-number">01</span>Introduction to XML</h2>
+                <p class="lead"><strong>XML</strong> (Extensible Markup Language) is a text-based markup language for representing, storing, and transporting structured data. Unlike HTML, which has a predefined set of tags for displaying a page, XML lets the author define descriptive tags that fit the data. XML describes what information means; another program or stylesheet decides how to use or display it.</p>
+                <p>For example, a course record can be represented as nested elements. The tag names—<code>course</code>, <code>title</code>, and <code>credits</code>—describe the values rather than their visual appearance. Because the document is plain text and has an explicit tree structure, different programs can exchange it without sharing the same internal data model.</p>
+                <pre><code>&lt;course code="WT205"&gt;
+    &lt;title&gt;Web Technologies&lt;/title&gt;
+    &lt;credits&gt;4&lt;/credits&gt;
+    &lt;instructor&gt;Dr. Mehta&lt;/instructor&gt;
+&lt;/course&gt;</code></pre>
+                <div class="grid">
+                    <article class="panel"><h4>Extensible</h4><p>Authors choose meaningful element and attribute names for their domain; XML itself does not prescribe a fixed vocabulary.</p></article>
+                    <article class="panel"><h4>Structured</h4><p>Elements nest in a tree, allowing records to contain related subrecords in a clear parent-child relationship.</p></article>
+                    <article class="panel"><h4>Portable text</h4><p>XML can be read by people and processed by software on different platforms. It is a data format, not a programming language.</p></article>
+                </div>
+                <div class="note"><strong>XML is not HTML.</strong> HTML has standard elements with browser-defined meaning and presentation. XML allows custom names and focuses on carrying data; it does not automatically create a styled user interface.</div>
+                <h3>Well-formed versus valid</h3>
+                <p>A <strong>well-formed</strong> XML document follows XML syntax rules: it has one root element, tags are properly nested and closed, and attribute values are quoted. A <strong>valid</strong> document is well-formed and also conforms to a declared grammar such as a DTD or XML Schema (XSD). A browser's XML parser can check basic well-formedness, but it does not automatically validate against every DTD or XSD.</p>
+                <div class="demo">
+                    <label class="demo-label" for="xml-input">Edit the XML, then parse it</label>
+                    <textarea id="xml-input" spellcheck="false" aria-label="Editable XML sample">&lt;catalog&gt;
+    &lt;book id="b101"&gt;
+        &lt;title&gt;Learning XML&lt;/title&gt;
+        &lt;author&gt;Asha Rao&lt;/author&gt;
+        &lt;price currency="INR"&gt;450&lt;/price&gt;
+    &lt;/book&gt;
+    &lt;book id="b102"&gt;
+        &lt;title&gt;Data on the Web&lt;/title&gt;
+        &lt;author&gt;Neil Patel&lt;/author&gt;
+        &lt;price currency="INR"&gt;525&lt;/price&gt;
+    &lt;/book&gt;
+&lt;/catalog&gt;</textarea>
+                    <button type="button" id="parse-xml">Parse XML</button>
+                    <p class="status" id="parse-status" aria-live="polite">The demo uses the browser's DOMParser and reports the number of book elements.</p>
+                </div>
+                <h3>Where XML is used</h3>
+                <ul>
+                    <li>Exchanging structured data between applications and services.</li>
+                    <li>Configuration files, document formats, and feeds such as RSS.</li>
+                    <li>Representing data where explicit structure and human readability matter.</li>
+                </ul>
+            </section>
+
+            <section id="components">
+                <h2><span class="topic-number">02</span>XML Key Components</h2>
+                <p>An XML document is a tree of nodes. The following example includes the most common pieces: a declaration, a root element, nested elements, attributes, text, and a comment.</p>
+                <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;student id="s-204" status="active"&gt;
+    &lt;name&gt;Mira Shah&lt;/name&gt;
+    &lt;programme&gt;B.Tech CSE&lt;/programme&gt;
+    &lt;marks subject="XML"&gt;88&lt;/marks&gt;
+    &lt;!-- A student record --&gt;
+&lt;/student&gt;</code></pre>
+                <table>
+                    <thead><tr><th>Component</th><th>Example</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                        <tr><td>XML declaration</td><td><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code></td><td>Optional first line; identifies the XML version and character encoding.</td></tr>
+                        <tr><td>Element</td><td><code>&lt;name&gt;Mira Shah&lt;/name&gt;</code></td><td>A named unit of data. An element can contain text, attributes, other elements, or a combination.</td></tr>
+                        <tr><td>Root element</td><td><code>&lt;student&gt;...&lt;/student&gt;</code></td><td>The single outermost element that contains every other element in the document.</td></tr>
+                        <tr><td>Attribute</td><td><code>id="s-204"</code></td><td>Metadata written in an element's start tag as a name/value pair. Values must be quoted.</td></tr>
+                        <tr><td>Text node</td><td><code>88</code></td><td>The character data between a start tag and its matching end tag.</td></tr>
+                        <tr><td>Comment</td><td><code>&lt;!-- A student record --&gt;</code></td><td>A note for readers; comments are not part of the document's data content.</td></tr>
+                    </tbody>
+                </table>
+                <h3>XML syntax rules to remember</h3>
+                <ul>
+                    <li>Element names are case-sensitive: <code>&lt;Name&gt;</code> and <code>&lt;name&gt;</code> are different names.</li>
+                    <li>Every opened element must be closed, or be empty-element syntax such as <code>&lt;image/&gt;</code>.</li>
+                    <li>Elements must be properly nested; <code>&lt;b&gt;&lt;i&gt;...&lt;/b&gt;&lt;/i&gt;</code> is not well-formed.</li>
+                    <li>There must be exactly one document element (root), though it may contain many children.</li>
+                    <li>Reserved characters in text must be escaped: use <code>&amp;amp;</code>, <code>&amp;lt;</code>, and <code>&amp;gt;</code> for ampersand, less-than, and greater-than.</li>
+                </ul>
+                <h3>Namespaces</h3>
+                <p>Namespaces prevent naming collisions when XML from different vocabularies is combined. A namespace prefix is connected to a URI by <code>xmlns</code>; the URI identifies the vocabulary and does not have to be a working web page.</p>
+                <pre><code>&lt;course xmlns:lib="https://example.edu/library"&gt;
+    &lt;title&gt;Web Technologies&lt;/title&gt;
+    &lt;lib:title&gt;XML for Libraries&lt;/lib:title&gt;
+&lt;/course&gt;</code></pre>
+                <p>Here, the unprefixed <code>title</code> and <code>lib:title</code> are distinct names because the latter belongs to the library namespace.</p>
+            </section>
+
+            <section id="validation">
+                <h2><span class="topic-number">03</span>DTD and Schemas</h2>
+                <p>Well-formedness checks syntax, but it does not specify which elements a particular application expects. A grammar defines allowed elements, attributes, their order, and how often they may appear. XML processors can use that grammar to validate a document before the application consumes it.</p>
+                <div class="grid">
+                    <article class="panel">
+                        <h4>DTD (Document Type Definition)</h4>
+                        <p>A compact grammar that declares elements, attributes, entities, and content models. A DTD can be embedded in an XML document or stored as an external <code>.dtd</code> file. DTD syntax is not itself XML and has limited data typing.</p>
+                    </article>
+                    <article class="panel">
+                        <h4>XML Schema (XSD)</h4>
+                        <p>An XML-based grammar that supports built-in types such as <code>xs:decimal</code>, constraints, namespaces, and reusable type definitions. XSD is more expressive and strongly typed than DTD.</p>
+                    </article>
+                </div>
+                <h3>One catalog, described by a DTD</h3>
+                <p>Save the following as <code>catalog.dtd</code>. It requires one or more <code>product</code> elements, each with a <code>name</code> followed by a <code>price</code>; every product must have an <code>id</code> attribute.</p>
+                <pre><code>&lt;!ELEMENT catalog (product+)&gt;
+&lt;!ELEMENT product (name, price)&gt;
+&lt;!ATTLIST product id ID #REQUIRED&gt;
+&lt;!ELEMENT name (#PCDATA)&gt;
+&lt;!ELEMENT price (#PCDATA)&gt;</code></pre>
+                <p>Save this matching instance as <code>catalog.xml</code>. The document type declaration connects it to the external DTD.</p>
+                <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE catalog SYSTEM "catalog.dtd"&gt;
+&lt;catalog&gt;
+    &lt;product id="p101"&gt;
+        &lt;name&gt;Notebook&lt;/name&gt;
+        &lt;price&gt;45.50&lt;/price&gt;
+    &lt;/product&gt;
+    &lt;product id="p102"&gt;
+        &lt;name&gt;Pen set&lt;/name&gt;
+        &lt;price&gt;30.00&lt;/price&gt;
+    &lt;/product&gt;
+&lt;/catalog&gt;</code></pre>
+                <h3>Describe the same structure with XML Schema</h3>
+                <p>Save the following as <code>catalog.xsd</code>. The schema requires a decimal price and a product ID, and enforces the order of child elements.</p>
+                <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;xs:element name="catalog"&gt;
+        &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+                &lt;xs:element name="product" maxOccurs="unbounded"&gt;
+                    &lt;xs:complexType&gt;
+                        &lt;xs:sequence&gt;
+                            &lt;xs:element name="name" type="xs:string"/&gt;
+                            &lt;xs:element name="price" type="xs:decimal"/&gt;
+                        &lt;/xs:sequence&gt;
+                        &lt;xs:attribute name="id" type="xs:ID" use="required"/&gt;
+                    &lt;/xs:complexType&gt;
+                &lt;/xs:element&gt;
+            &lt;/xs:sequence&gt;
+        &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</code></pre>
+                <p>For XSD validation, use this XML header instead of the DTD declaration above. Keep the catalog body the same.</p>
+                <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="catalog.xsd"&gt;
+    ...
+&lt;/catalog&gt;</code></pre>
+                <div class="note">
+                    <strong>Run the validation examples:</strong> Save the DTD version as <code>catalog.xml</code> beside <code>catalog.dtd</code>, then run <code>xmllint --noout --valid catalog.xml</code>. To validate with XSD, replace the DTD declaration with the schema header and run <code>xmllint --noout --schema catalog.xsd catalog.xml</code>. These commands use the <code>xmllint</code> utility (provided by libxml2); a successful validation reports that the document validates.
+                </div>
+                <table>
+                    <thead><tr><th>Feature</th><th>DTD</th><th>XSD</th></tr></thead>
+                    <tbody>
+                        <tr><td>Grammar format</td><td>Specialized DTD syntax</td><td>XML document</td></tr>
+                        <tr><td>Data types</td><td>Limited (for example, text and ID)</td><td>Rich built-in and custom types (for example, decimal and date)</td></tr>
+                        <tr><td>Namespaces</td><td>Limited support</td><td>Designed to support XML namespaces</td></tr>
+                        <tr><td>Typical choice</td><td>Simple or legacy document formats</td><td>When detailed constraints and typed values are important</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="transformation">
+                <h2><span class="topic-number">04</span>Transforming XML using XSL and XSLT</h2>
+                <p><strong>XSL</strong> (Extensible Stylesheet Language) is a family of technologies for working with XML. Its key parts include <strong>XSLT</strong> (rules for transforming XML), <strong>XPath</strong> (expressions for selecting nodes and values), and XSL-FO (formatting objects, commonly used for paginated output). In many introductory materials, “XSL” is used informally to mean an XSLT stylesheet.</p>
+                <p><strong>XSLT</strong> reads a source XML tree, selects nodes with XPath, and applies template rules to produce a result. The result can be HTML for a web page, another XML vocabulary, or plain text. XSLT changes the representation of data; it does not change the source XML.</p>
+                <h3>Executable browser example</h3>
+                <p>This workbench uses the browser's built-in <code>DOMParser</code> and <code>XSLTProcessor</code>. Edit the source XML or stylesheet, then run the transform. The included stylesheet selects each <code>book</code> and creates an HTML table.</p>
+                <div class="demo">
+                    <div class="demo-grid transform-editor">
+                        <div>
+                            <label class="demo-label" for="transform-xml">Source XML</label>
+                            <textarea id="transform-xml" spellcheck="false">&lt;catalog&gt;
+    &lt;book id="b101"&gt;
+        &lt;title&gt;Learning XML&lt;/title&gt;
+        &lt;author&gt;Asha Rao&lt;/author&gt;
+        &lt;price&gt;450&lt;/price&gt;
+    &lt;/book&gt;
+    &lt;book id="b102"&gt;
+        &lt;title&gt;Data on the Web&lt;/title&gt;
+        &lt;author&gt;Neil Patel&lt;/author&gt;
+        &lt;price&gt;525&lt;/price&gt;
+    &lt;/book&gt;
+&lt;/catalog&gt;</textarea>
+                        </div>
+                        <div>
+                            <label class="demo-label" for="transform-xsl">XSLT 1.0 stylesheet</label>
+                            <textarea id="transform-xsl" spellcheck="false">&lt;xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+    &lt;xsl:output method="html" indent="yes"/&gt;
+    &lt;xsl:template match="/"&gt;
+        &lt;table&gt;
+            &lt;tr&gt;
+                &lt;th&gt;ID&lt;/th&gt;
+                &lt;th&gt;Title&lt;/th&gt;
+                &lt;th&gt;Author&lt;/th&gt;
+                &lt;th&gt;Price (INR)&lt;/th&gt;
+            &lt;/tr&gt;
+            &lt;xsl:for-each select="catalog/book"&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;&lt;xsl:value-of select="@id"/&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;xsl:value-of select="title"/&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;xsl:value-of select="author"/&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;xsl:value-of select="price"/&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/xsl:for-each&gt;
+        &lt;/table&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</textarea>
+                        </div>
+                    </div>
+                    <button type="button" id="run-transform">Transform XML</button>
+                    <div class="demo-surface">
+                        <span class="demo-label">Transformed HTML result</span>
+                        <div class="result-box" id="transform-output" aria-live="polite">Press “Transform XML” to create the table.</div>
+                    </div>
+                    <p class="status" id="transform-status" aria-live="polite"></p>
+                </div>
+                <h3>What the stylesheet does</h3>
+                <ul>
+                    <li><code>&lt;xsl:template match="/"&gt;</code> begins at the document root.</li>
+                    <li><code>&lt;xsl:for-each select="catalog/book"&gt;</code> selects each book with an XPath expression and repeats the enclosed output.</li>
+                    <li><code>&lt;xsl:value-of select="@id"/&gt;</code> reads an attribute; selecting <code>title</code> or <code>author</code> reads an element's text.</li>
+                    <li>Literal HTML tags such as <code>&lt;table&gt;</code> become part of the result document.</li>
+                </ul>
+                <h3>Connect an XML file to a stylesheet</h3>
+                <p>For a standalone XML file, an <code>xml-stylesheet</code> processing instruction can associate it with an XSLT file. Save the XML and XSLT files together and open the XML in a browser that supports this instruction.</p>
+                <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?xml-stylesheet type="text/xsl" href="catalog.xsl"?&gt;
+&lt;catalog&gt;
+    &lt;book id="b101"&gt;
+        &lt;title&gt;Learning XML&lt;/title&gt;
+        &lt;author&gt;Asha Rao&lt;/author&gt;
+        &lt;price&gt;450&lt;/price&gt;
+    &lt;/book&gt;
+&lt;/catalog&gt;</code></pre>
+                <p>For a command-line demonstration, save the source as <code>catalog.xml</code> and the stylesheet from the workbench as <code>catalog.xsl</code>, then run <code>xsltproc catalog.xsl catalog.xml</code>. The transformed HTML is written to standard output; <code>xsltproc</code> is available with libxslt.</p>
+                <div class="note"><strong>Compatibility:</strong> The interactive example uses XSLT 1.0 through the browser's <code>XSLTProcessor</code> API. It works in browsers that still expose that API, but Chromium currently warns that XSLT support is deprecated and may remove it. Use the <code>xsltproc</code> command for a durable local demonstration. Newer XSLT versions and server-side transformations require an appropriate processor; browser support is not a substitute for server-side validation.</div>
+            </section>
+
+            <section aria-labelledby="summary-heading">
+                <h2 id="summary-heading">Unit 5 at a glance</h2>
+                <ol>
+                    <li>XML is an extensible, text-based format that describes structured data.</li>
+                    <li>Elements, attributes, text, and namespaces make up the document tree; well-formedness is the baseline syntax requirement.</li>
+                    <li>DTD and XSD declare allowed document structure. XSD adds richer types and constraints.</li>
+                    <li>XSLT uses XPath and template rules to transform XML into HTML, XML, or text.</li>
+                </ol>
+            </section>
+
+            <section id="must-learn-checklist">
+                <h2>Must-Learn XML Topics for First Year</h2>
+                <div class="note">
+                    <strong>Checklist:</strong>
+                    <ul>
+                        <li><label><input type="checkbox"> XML purpose, uses, and difference from HTML</label></li>
+                        <li><label><input type="checkbox"> XML declaration, root element, and document tree</label></li>
+                        <li><label><input type="checkbox"> Elements, attributes, text, and comments</label></li>
+                        <li><label><input type="checkbox"> Well-formedness: matching tags, proper nesting, and quoted attributes</label></li>
+                        <li><label><input type="checkbox"> Escaping reserved characters such as <code>&amp;amp;</code> and <code>&amp;lt;</code></label></li>
+                        <li><label><input type="checkbox"> XML namespaces and prefixed names</label></li>
+                        <li><label><input type="checkbox"> DTD element declarations, content models, and attributes</label></li>
+                        <li><label><input type="checkbox"> XSD structure, built-in data types, and constraints</label></li>
+                        <li><label><input type="checkbox"> Difference between well-formed and valid XML</label></li>
+                        <li><label><input type="checkbox"> Validate XML using a DTD or XSD</label></li>
+                        <li><label><input type="checkbox"> XPath basics: selecting elements, attributes, and values</label></li>
+                        <li><label><input type="checkbox"> XSLT templates, <code>xsl:value-of</code>, and <code>xsl:for-each</code></label></li>
+                        <li><label><input type="checkbox"> Transform XML into HTML or another output format</label></li>
+                        <li><label><input type="checkbox"> Test XML parsing and transformations with the examples in this guide</label></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <strong>Further reading:</strong>
+            <a href="https://developer.mozilla.org/en-US/docs/Glossary/XML" target="_blank" rel="noopener noreferrer">MDN XML glossary</a> ·
+            <a href="https://www.w3schools.com/xml/default.asp" target="_blank" rel="noopener noreferrer">W3Schools XML tutorial</a>
+        </footer>
+    </div>
+
+    <script>
+        const codeEditors = [...document.querySelectorAll("textarea")];
+        function resizeCodeEditors() {
+            for (const editor of codeEditors) {
+                editor.style.height = "auto";
+                editor.style.height = `${editor.scrollHeight}px`;
+            }
+        }
+        codeEditors.forEach((editor) => editor.addEventListener("input", resizeCodeEditors));
+        window.addEventListener("resize", resizeCodeEditors);
+        window.addEventListener("beforeprint", resizeCodeEditors);
+        resizeCodeEditors();
+
+        document.querySelector("#download-pdf").addEventListener("click", () => {
+            window.print();
+        });
+
+        function parseXml(xmlText, label) {
+            const documentNode = new DOMParser().parseFromString(xmlText, "application/xml");
+            const parserError = documentNode.querySelector("parsererror");
+            if (parserError) {
+                throw new Error(`${label} is not well-formed XML: ${parserError.textContent.trim()}`);
+            }
+            return documentNode;
+        }
+
+        document.querySelector("#parse-xml").addEventListener("click", () => {
+            const status = document.querySelector("#parse-status");
+            status.classList.remove("error");
+            try {
+                const xml = parseXml(document.querySelector("#xml-input").value, "The document");
+                const books = xml.getElementsByTagName("book").length;
+                status.textContent = `Well-formed XML. Root element: <${xml.documentElement.tagName}>. Book elements found: ${books}.`;
+            } catch (error) {
+                status.textContent = error.message;
+                status.classList.add("error");
+            }
+        });
+
+        document.querySelector("#run-transform").addEventListener("click", () => {
+            const status = document.querySelector("#transform-status");
+            const output = document.querySelector("#transform-output");
+            status.classList.remove("error");
+            output.replaceChildren();
+            try {
+                const source = parseXml(document.querySelector("#transform-xml").value, "Source XML");
+                const stylesheet = parseXml(document.querySelector("#transform-xsl").value, "The XSLT stylesheet");
+                const processor = new XSLTProcessor();
+                processor.importStylesheet(stylesheet);
+                const result = processor.transformToFragment(source, document);
+                output.replaceChildren(result);
+                status.textContent = "Transformation complete. The result was inserted into the page.";
+            } catch (error) {
+                status.textContent = error.message || "The browser could not apply this stylesheet.";
+                status.classList.add("error");
+            }
+        });
+    </script>
+</body>
+</html>

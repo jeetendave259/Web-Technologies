@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Unit 2 HTML study guide covering document structure, elements, attributes, text, colors, links, lists, tables, images, forms, HTML5 semantics, media, and metadata.">
+    <title>Unit 2: HTML Complete Study Guide - Web Technologies</title>
+    <style>
+        :root {
+            --ink: #23343a;
+            --teal: #087e78;
+            --teal-dark: #075752;
+            --coral: #d95e45;
+            --gold: #efbd4b;
+            --green: #36775a;
+            --paper: #ffffff;
+            --page: #edf2ef;
+            --soft-teal: #e6f4f1;
+            --soft-coral: #fbede9;
+            --line: #d8e2dd;
+            --code: #202a2d;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            padding: 24px;
+            color: var(--ink);
+            background: var(--page);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.65;
+        }
+        .page {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            overflow: hidden;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            box-shadow: 0 8px 28px rgba(7, 87, 82, 0.08);
+        }
+        .masthead {
+            padding: 38px 44px 30px;
+            color: white;
+            background: var(--teal-dark);
+            border-bottom: 6px solid var(--coral);
+        }
+        .course-label {
+            margin: 0 0 8px;
+            color: #f6d684;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .masthead h1 { max-width: 850px; margin: 0; font-size: 2.2rem; line-height: 1.2; }
+        .masthead p:last-child { max-width: 900px; margin: 14px 0 0; color: #e0f0ed; }
+        .top-links, .topic-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+            padding: 15px 44px;
+            border-bottom: 1px solid var(--line);
+        }
+        .top-links { background: #f7f9f8; }
+        .topic-nav {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 2px 8px rgba(7, 87, 82, 0.06);
+        }
+        a { color: var(--teal-dark); }
+        .masthead a, footer a { color: #f6d684; }
+        .top-links a, .topic-nav a { font-weight: 650; }
+        .print-button {
+            min-height: 42px;
+            padding: 8px 14px;
+            color: white;
+            background: var(--teal);
+            border: 1px solid var(--teal);
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        }
+        .print-button:hover {
+            background: var(--teal-dark);
+            border-color: var(--teal-dark);
+            box-shadow: 0 3px 8px rgba(7, 87, 82, 0.2);
+            transform: translateY(-1px);
+        }
+        .print-button:active { box-shadow: none; transform: translateY(1px); }
+        .print-button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 2px;
+        }
+        main { padding: 4px 44px 48px; }
+        section { padding-top: 24px; scroll-margin-top: 72px; }
+        h2 {
+            margin: 28px 0 14px;
+            color: var(--teal-dark);
+            font-size: 1.55rem;
+            line-height: 1.3;
+        }
+        h2 .topic-number {
+            display: inline-block;
+            margin-right: 8px;
+            color: var(--coral);
+            font-size: 0.85rem;
+            vertical-align: 0.15em;
+        }
+        h3 { margin: 26px 0 10px; color: var(--teal); font-size: 1.15rem; }
+        h4 { margin: 0 0 8px; color: var(--teal-dark); }
+        p { margin: 10px 0 15px; }
+        ul, ol { padding-left: 24px; }
+        li { margin: 6px 0; }
+        .lead { max-width: 900px; font-size: 1.08rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 18px 0; }
+        .panel {
+            min-width: 0;
+            padding: 18px;
+            background: #f7f9f8;
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--teal);
+        }
+        .panel p:last-child { margin-bottom: 0; }
+        .note { padding: 14px 16px; background: #fbf4df; border-left: 5px solid var(--gold); }
+        .note p:last-child { margin-bottom: 0; }
+        code {
+            padding: 1px 5px;
+            color: #8b2e50;
+            background: #f3edf0;
+            border-radius: 3px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.93em;
+            overflow-wrap: anywhere;
+        }
+        pre {
+            max-width: 100%;
+            margin: 14px 0 0;
+            padding: 16px 18px;
+            overflow-x: auto;
+            color: #e5edf3;
+            background: var(--code);
+            border-left: 4px solid var(--gold);
+            border-radius: 4px;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+        pre code { padding: 0; color: inherit; background: none; font-size: 0.9rem; }
+        .demo {
+            margin: 0 0 22px;
+            padding: 22px;
+            background: white;
+            border: 1px solid var(--line);
+            border-top: 0;
+            border-radius: 0 0 4px 4px;
+        }
+        .demo::before {
+            display: block;
+            margin: -22px -22px 18px;
+            padding: 5px 12px;
+            color: var(--teal-dark);
+            background: #fbf4df;
+            content: "TRY THE EXAMPLE";
+            font-size: 0.72rem;
+            font-weight: 750;
+        }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+        .demo-surface { min-width: 0; padding: 16px; background: #f8fbfa; border: 1px solid var(--line); }
+        .demo-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #586d69;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .sample-form { display: grid; gap: 12px; max-width: 560px; }
+        .sample-form label { display: grid; gap: 4px; font-weight: 600; }
+        .sample-form input, .sample-form select, .sample-form textarea {
+            width: 100%;
+            min-height: 40px;
+            padding: 8px 10px;
+            color: var(--ink);
+            background: white;
+            border: 1px solid #aebdb8;
+            border-radius: 3px;
+            font: inherit;
+        }
+        .sample-form fieldset { border: 1px solid var(--line); }
+        .sample-form fieldset label { display: inline-flex; align-items: center; margin: 5px 14px 5px 0; font-weight: 400; }
+        .sample-form input[type="radio"], .sample-form input[type="checkbox"] { width: auto; min-height: auto; margin-right: 6px; }
+        .sample-form button, .demo-action {
+            min-height: 42px;
+            padding: 9px 14px;
+            color: white;
+            background: var(--teal);
+            border: 0;
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 650;
+            cursor: pointer;
+        }
+        .sample-form button:hover, .demo-action:hover { background: var(--teal-dark); }
+        .demo-output {
+            min-height: 50px;
+            margin-top: 12px;
+            padding: 12px;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+            background: #f7f9f8;
+            border: 1px solid var(--line);
+        }
+        .semantic-demo { padding: 16px; background: #f8fbfa; border: 1px solid var(--line); }
+        .semantic-demo header, .semantic-demo footer { padding: 10px; background: var(--soft-teal); }
+        .semantic-demo nav { padding: 8px; background: #fbf4df; }
+        .semantic-demo article { margin: 10px 0; padding: 14px; background: white; border: 1px solid var(--line); }
+        .semantic-demo aside { padding: 10px; background: var(--soft-coral); }
+        .drag-area {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+            align-items: stretch;
+        }
+        .drag-card, .drop-zone { min-height: 105px; padding: 16px; border: 2px dashed #9cafaa; border-radius: 4px; }
+        .drag-card { cursor: grab; background: var(--soft-teal); border-style: solid; }
+        .drop-zone { display: grid; place-items: center; background: #fbf4df; text-align: center; }
+        .drop-zone.is-over { background: #d8eee8; border-color: var(--teal); }
+        table { width: 100%; margin: 18px 0; border-collapse: collapse; }
+        th, td { padding: 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+        th { color: white; background: var(--teal-dark); }
+        tr:nth-child(even) td { background: #f7f9f8; }
+        footer { padding: 22px 44px; color: #e5f0ee; background: var(--teal-dark); }
+        @media (max-width: 700px) {
+            body { padding: 0; }
+            .page { border: 0; border-radius: 0; }
+            .masthead { padding: 28px 22px 24px; }
+            .masthead h1 { font-size: 1.8rem; }
+            .top-links, .topic-nav { padding: 14px 22px; }
+            main { padding: 2px 22px 32px; }
+            footer { padding: 20px 22px; }
+            h2 { font-size: 1.35rem; }
+            th, td { min-width: 130px; }
+            pre { padding: 13px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+            .print-button:hover, .print-button:active { transform: none; }
+        }
+        @media print {
+            @page { margin: 16mm; }
+            html { scroll-behavior: auto; }
+            body { padding: 0; color: #111; background: white; font-size: 10.5pt; }
+            .page { width: 100%; overflow: visible; border: 0; border-radius: 0; box-shadow: none; }
+            .top-links, .topic-nav, .print-button { display: none !important; }
+            main { padding: 0; }
+            section { padding-top: 8px; scroll-margin-top: 0; }
+            h2, h3, h4 { break-after: avoid; }
+            .panel, .note, .demo, .semantic-demo, .drag-card, .drop-zone { break-inside: avoid; box-shadow: none; }
+            pre, table { break-inside: auto; }
+            pre {
+                overflow: visible;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
+                color: #111;
+                background: #f2f4f5;
+            }
+            pre code { color: #111; }
+            th { color: #111; background: #e5eaee; }
+            tr:nth-child(even) td { background: #f6f7f8; }
+            footer { padding: 14px 0 0; color: #111; background: white; }
+            footer a, a { color: #075752; text-decoration: underline; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page" id="top">
+        <header class="masthead">
+            <p class="course-label">Web Technologies | C2111C3 | Unit 2</p>
+            <h1>HTML: The Structure of the Web</h1>
+            <p>A detailed, practical guide to HTML documents, elements, attributes, text, colors, hyperlinks, lists, tables, images, forms, semantic HTML5, multimedia, drag and drop, and metadata. Examples are standard HTML you can save and open in a browser.</p>
+            <p><strong>Based on:</strong> course syllabus and Unit 2 lecture material</p>
+        </header>
+
+        <nav class="top-links" aria-label="Related course pages">
+            <a href="course_portal.html#unit2">Course portal: Unit 2</a>
+            <a href="Syllabus.html">Full syllabus</a>
+            <a href="unit1_intro_to_www.html">Unit 1: World Wide Web</a>
+            <a href="unit2_html.html">Unit 2: HTML</a>
+            <a href="unit3_css_final.html">Unit 3: CSS</a>
+            <a href="unit4_javascript_jquery.html">Unit 4: JavaScript and jQuery</a>
+            <a href="unit5_xml.html">Unit 5: XML</a>
+            <a href="unit6_php.html">Unit 6: PHP</a>
+            <button class="print-button" id="download-pdf" type="button">Download as PDF</button>
+        </nav>
+        <nav class="topic-nav" aria-label="Jump to a topic">
+            <a href="#foundation">HTML foundation</a>
+            <a href="#elements">Elements and attributes</a>
+            <a href="#text">Text and formatting</a>
+            <a href="#colors">Styles and colors</a>
+            <a href="#links">Links and URLs</a>
+            <a href="#lists-tables">Lists and tables</a>
+            <a href="#images">Images</a>
+            <a href="#forms">Forms</a>
+            <a href="#html5">Semantic HTML5</a>
+            <a href="#media">Media and drag/drop</a>
+            <a href="#metadata">Metadata and XHTML</a>
+        </nav>
+
+        <main>
+            <section id="foundation">
+                <h2><span class="topic-number">01</span>HTML and the Basic Document</h2>
+                <p class="lead"><strong>HTML</strong> means <em>HyperText Markup Language</em>. It is the standard markup language used to describe the structure and meaning of web content. HTML is not a programming language: its elements mark up text, links, images, forms, and other content so browsers can interpret and present them.</p>
+                <div class="grid">
+                    <article class="panel"><h4>HyperText</h4><p>Text containing links that connect one resource to another. Following links lets a reader navigate a web of documents.</p></article>
+                    <article class="panel"><h4>Markup</h4><p>Tags annotate content, for example marking a line as a heading, a paragraph, a link, or an image.</p></article>
+                    <article class="panel"><h4>Browser</h4><p>A browser reads HTML, builds a document tree, loads referenced resources, and renders the result for people to use.</p></article>
+                </div>
+                <h3>A minimal, complete HTML5 document</h3>
+                <p>Save the example as <code>hello.html</code>, then open it in any modern browser. The <code>&lt;!doctype html&gt;</code> declaration selects standards mode; <code>head</code> holds document information, while visible page content belongs in <code>body</code>.</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello, web!&lt;/h1&gt;
+    &lt;p&gt;This is my first HTML document.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                <table>
+                    <thead><tr><th>Part</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&lt;!doctype html&gt;</code></td><td>Declares an HTML document and asks the browser to use standards mode.</td></tr>
+                        <tr><td><code>&lt;html lang="en"&gt;</code></td><td>Root element; its language helps assistive technology and other tools.</td></tr>
+                        <tr><td><code>&lt;head&gt;</code></td><td>Contains metadata, the page title, and links to resources such as stylesheets.</td></tr>
+                        <tr><td><code>&lt;meta charset="utf-8"&gt;</code></td><td>Declares the character encoding so text is decoded consistently.</td></tr>
+                        <tr><td><code>&lt;meta name="viewport"&gt;</code></td><td>Helps the layout use the device's actual viewport on mobile screens.</td></tr>
+                        <tr><td><code>&lt;title&gt;</code></td><td>Sets the browser-tab title and a useful name for bookmarks and search results.</td></tr>
+                        <tr><td><code>&lt;body&gt;</code></td><td>Contains the content rendered in the page.</td></tr>
+                    </tbody>
+                </table>
+                <div class="note"><strong>History in brief:</strong> Tim Berners-Lee created the Web at CERN, with the first HTML specifications appearing in the early 1990s. HTML has evolved from simple linked documents into a standards-based language for accessible documents and interactive applications. Modern HTML is maintained as a living standard.</div>
+            </section>
+
+            <section id="elements">
+                <h2><span class="topic-number">02</span>HTML Elements, Nesting, and Attributes</h2>
+                <p>An HTML <strong>element</strong> generally consists of an opening tag, content, and a closing tag. The element represents the whole structure; a tag is the markup at its boundary. Elements can be nested to express relationships, and the inner element must close before its parent.</p>
+<pre><code>&lt;p&gt;This paragraph contains &lt;strong&gt;important text&lt;/strong&gt;.&lt;/p&gt;</code></pre>
+                <p>Some elements are <strong>void elements</strong>: they have no child content and do not use a closing tag. Common examples include <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;img&gt;</code>, and <code>&lt;input&gt;</code>. Use lowercase tag and attribute names and quote attribute values for readable, consistent HTML.</p>
+                <h3>Attributes add information to an element</h3>
+                <p>Attributes appear in the opening tag, usually as a name and quoted value. Global attributes such as <code>id</code>, <code>class</code>, <code>lang</code>, and <code>title</code> can be used on many elements; others, such as <code>href</code> and <code>src</code>, apply to specific elements.</p>
+<pre><code>&lt;a href="https://example.com/" title="Visit the example site"&gt;
+    Example website
+&lt;/a&gt;
+
+&lt;img src="images/flower.jpg" alt="A yellow flower" width="320" height="220"&gt;</code></pre>
+                <div class="grid">
+                    <article class="panel"><h4><code>href</code></h4><p>Provides the destination of a link.</p></article>
+                    <article class="panel"><h4><code>src</code></h4><p>Provides the address of an embedded resource, such as an image or media file.</p></article>
+                    <article class="panel"><h4><code>alt</code></h4><p>Gives a text alternative for an image. Describe its purpose, or use empty text for decorative imagery.</p></article>
+                    <article class="panel"><h4><code>id</code> and <code>class</code></h4><p>Identify an element or group of elements for navigation, CSS, and scripts.</p></article>
+                </div>
+                <div class="note"><strong>Do not rely on browser error recovery:</strong> Browsers may display malformed HTML, but omitted end tags or incorrect nesting can produce unexpected document trees. Close elements correctly and validate your page while learning.</div>
+            </section>
+
+            <section id="text">
+                <h2><span class="topic-number">03</span>Headings, Paragraphs, and Text Formatting</h2>
+                <p>Use headings to communicate the outline of the content, not merely to make text look large. A page normally has one descriptive top-level heading followed by logically nested section headings. Use paragraphs for blocks of prose; browsers collapse repeated spaces and line breaks in ordinary HTML text.</p>
+<pre><code>&lt;h1&gt;A Guide to Gardens&lt;/h1&gt;
+&lt;h2&gt;Choosing a location&lt;/h2&gt;
+&lt;p&gt;Most herbs grow well in a bright, sheltered place.&lt;/p&gt;
+&lt;h2&gt;Preparing the soil&lt;/h2&gt;
+&lt;p&gt;Remove weeds and loosen the soil before planting.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;New section after a thematic break.&lt;/p&gt;</code></pre>
+                <h3>Meaningful inline formatting</h3>
+                <table>
+                    <thead><tr><th>Element</th><th>Meaning / typical use</th><th>Example result</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&lt;strong&gt;</code></td><td>Content of strong importance.</td><td><strong>Important notice</strong></td></tr>
+                        <tr><td><code>&lt;em&gt;</code></td><td>Stress emphasis that can affect the sentence meaning.</td><td><em>Really do this</em></td></tr>
+                        <tr><td><code>&lt;mark&gt;</code></td><td>Text highlighted as relevant in context.</td><td><mark>Search match</mark></td></tr>
+                        <tr><td><code>&lt;small&gt;</code></td><td>Side comments or small print.</td><td><small>Terms apply.</small></td></tr>
+                        <tr><td><code>&lt;del&gt;</code> and <code>&lt;ins&gt;</code></td><td>Deleted and inserted text in an edit.</td><td><del>old</del> <ins>new</ins></td></tr>
+                        <tr><td><code>&lt;sub&gt;</code> and <code>&lt;sup&gt;</code></td><td>Subscript and superscript, for example formulas or exponents.</td><td>H<sub>2</sub>O and x<sup>2</sup></td></tr>
+                        <tr><td><code>&lt;pre&gt;</code></td><td>Preformatted text where whitespace is significant.</td><td>Useful for code and aligned text.</td></tr>
+                    </tbody>
+                </table>
+                <p><code>&lt;b&gt;</code> and <code>&lt;i&gt;</code> draw attention or mark an alternate voice without the same importance/emphasis meaning as <code>&lt;strong&gt;</code> and <code>&lt;em&gt;</code>. Prefer the element whose meaning matches the content. Use <code>&lt;br&gt;</code> only for a meaningful line break, such as a postal address or poem, not to create page spacing.</p>
+<pre><code>&lt;p&gt;Water is H&lt;sub&gt;2&lt;/sub&gt;O; a square is x&lt;sup&gt;2&lt;/sup&gt;.&lt;/p&gt;
+&lt;blockquote cite="https://example.com/source"&gt;
+    &lt;p&gt;A longer quotation belongs in a block quotation.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The acronym &lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;
+   marks up web documents.&lt;/p&gt;
+&lt;p&gt;&lt;cite&gt;A work's title&lt;/cite&gt; may be cited in context.&lt;/p&gt;</code></pre>
+            </section>
+
+            <section id="colors">
+                <h2><span class="topic-number">04</span>Styles, Fonts, and HTML Color Values</h2>
+                <p>HTML provides structure and meaning; CSS is the recommended language for visual design. The presentation introduces the <code>style</code> attribute as a way to demonstrate CSS declarations directly on an element. Inline styles are useful for a tiny experiment, but for real pages prefer a stylesheet so design can be reused and maintained.</p>
+<pre><code>&lt;p style="color: #075752; background-color: #e6f4f1;"&gt;
+    This paragraph has a text color and a background color.
+&lt;/p&gt;
+&lt;p style="font-family: Georgia, serif; font-size: 1.25rem; text-align: center;"&gt;
+    A larger, centered line of text.
+&lt;/p&gt;</code></pre>
+                <h3>Common CSS color notations</h3>
+                <table>
+                    <thead><tr><th>Notation</th><th>Example</th><th>How to read it</th></tr></thead>
+                    <tbody>
+                        <tr><td>Named color</td><td><code>tomato</code></td><td>A predefined CSS color keyword.</td></tr>
+                        <tr><td>Hexadecimal</td><td><code>#087e78</code></td><td>Red, green, and blue channels written in base 16.</td></tr>
+                        <tr><td>RGB</td><td><code>rgb(8 126 120)</code></td><td>Red, green, and blue channel values.</td></tr>
+                        <tr><td>RGBA / alpha</td><td><code>rgb(8 126 120 / 50%)</code></td><td>RGB color with transparency.</td></tr>
+                        <tr><td>HSL</td><td><code>hsl(177 88% 26%)</code></td><td>Hue, saturation, and lightness.</td></tr>
+                        <tr><td>HSLA / alpha</td><td><code>hsl(177 88% 26% / 50%)</code></td><td>HSL color with transparency.</td></tr>
+                    </tbody>
+                </table>
+                <div class="demo">
+                    <div class="demo-grid">
+                        <div class="demo-surface" style="color:#075752;background-color:#e6f4f1"><span class="demo-label">Hex foreground / background</span><strong>Teal text on a pale teal background.</strong></div>
+                        <div class="demo-surface" style="color:rgb(160 64 45);background-color:rgb(251 237 233)"><span class="demo-label">RGB color</span><strong>RGB specifies red, green, and blue channels.</strong></div>
+                        <div class="demo-surface" style="color:hsl(177 88% 26%);background-color:hsl(177 45% 94%)"><span class="demo-label">HSL color</span><strong>HSL separates hue, saturation, and lightness.</strong></div>
+                    </div>
+                </div>
+                <div class="note"><strong>Accessibility:</strong> Choose foreground and background colors with sufficient contrast. Color should not be the only way information is conveyed.</div>
+            </section>
+
+            <section id="links">
+                <h2><span class="topic-number">05</span>Hyperlinks and URLs</h2>
+                <p>The anchor element <code>&lt;a&gt;</code> makes a hyperlink. Its <code>href</code> attribute identifies a destination. A destination can be an absolute URL, a relative path, an email address, or a fragment identifier linking to a section on the same page.</p>
+<pre><code>&lt;!-- Absolute URL: includes scheme and domain --&gt;
+&lt;a href="https://developer.mozilla.org/"&gt;MDN Web Docs&lt;/a&gt;
+
+&lt;!-- Relative URL: another file in this folder --&gt;
+&lt;a href="about.html"&gt;About this site&lt;/a&gt;
+
+&lt;!-- Fragment URL: an element with this id on this page --&gt;
+&lt;a href="#forms"&gt;Jump to the forms section&lt;/a&gt;
+
+&lt;!-- Email link --&gt;
+&lt;a href="mailto:student@example.edu"&gt;Email the student&lt;/a&gt;
+
+&lt;!-- A new tab; use rel protection with target="_blank" --&gt;
+&lt;a href="https://example.com/" target="_blank" rel="noopener noreferrer"&gt;
+    Open example in a new tab
+&lt;/a&gt;</code></pre>
+                <div class="grid">
+                    <article class="panel"><h4>Absolute path</h4><p>A full URL, such as <code>https://example.com/guide.html</code>, identifies a resource independently of the current page's directory.</p></article>
+                    <article class="panel"><h4>Relative path</h4><p>A path such as <code>images/logo.png</code> is resolved from the current document's location. Use <code>../</code> to move up one directory.</p></article>
+                    <article class="panel"><h4>Link purpose</h4><p>Write descriptive link text that makes sense out of context. Avoid vague labels such as “click here.”</p></article>
+                </div>
+                <div class="note"><strong>Security and usability:</strong> Keep links as links and buttons as buttons. A button performs an action; a link navigates. If a link opens a new tab, make that behavior clear to the user.</div>
+            </section>
+
+            <section id="lists-tables">
+                <h2><span class="topic-number">06</span>Lists and Tables</h2>
+                <h3>Choose the list type for the information</h3>
+                <ul>
+                    <li><code>&lt;ul&gt;</code> is an unordered list when item order is not important.</li>
+                    <li><code>&lt;ol&gt;</code> is an ordered list when sequence or ranking matters.</li>
+                    <li><code>&lt;dl&gt;</code> is a description list of terms and their descriptions.</li>
+                </ul>
+<pre><code>&lt;h3&gt;Packing list&lt;/h3&gt;
+&lt;ul&gt;
+    &lt;li&gt;Notebook&lt;/li&gt;
+    &lt;li&gt;Pen&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;How to submit&lt;/h3&gt;
+&lt;ol&gt;
+    &lt;li&gt;Write the document.&lt;/li&gt;
+    &lt;li&gt;Save it as an HTML file.&lt;/li&gt;
+    &lt;li&gt;Open the file in a browser.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;dl&gt;
+    &lt;dt&gt;HTML&lt;/dt&gt;
+    &lt;dd&gt;Markup used to structure web content.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+                <h3>Tables are for tabular data</h3>
+                <p>Build a table from rows (<code>&lt;tr&gt;</code>), data cells (<code>&lt;td&gt;</code>), and header cells (<code>&lt;th&gt;</code>). Use a caption and meaningful row or column headers. Do not use tables to position page layouts.</p>
+<pre><code>&lt;table&gt;
+    &lt;caption&gt;Weekly study plan&lt;/caption&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;&lt;th scope="col"&gt;Day&lt;/th&gt;&lt;th scope="col"&gt;Topic&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;&lt;th scope="row"&gt;Monday&lt;/th&gt;&lt;td&gt;HTML structure&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;th scope="row"&gt;Wednesday&lt;/th&gt;&lt;td&gt;Links and forms&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+                <div class="demo">
+                    <table>
+                        <caption>Weekly study plan</caption>
+                        <thead><tr><th scope="col">Day</th><th scope="col">Topic</th></tr></thead>
+                        <tbody>
+                            <tr><th scope="row">Monday</th><td>HTML structure</td></tr>
+                            <tr><th scope="row">Wednesday</th><td>Links and forms</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="images">
+                <h2><span class="topic-number">07</span>Images and Alternative Text</h2>
+                <p>The void element <code>&lt;img&gt;</code> embeds an image. Its <code>src</code> points to the image file, and its <code>alt</code> attribute provides a text alternative. The browser uses <code>width</code> and <code>height</code> to reserve the image's space and reduce layout shifts; CSS can control responsive display.</p>
+<pre><code>&lt;img
+    src="images/campus-garden.jpg"
+    alt="Students tending a garden beside the campus greenhouse"
+    width="800"
+    height="520"&gt;</code></pre>
+                <p>Use relative paths for files in your project, and keep filenames and directory structure accurate. Useful formats include JPEG for photographs, PNG for lossless images and transparency, SVG for scalable vector artwork, and WebP/AVIF for modern compressed images where supported. Animated GIF/APNG/WebP may be suitable for short animations.</p>
+                <div class="grid">
+                    <article class="panel"><h4>Meaningful image</h4><p>Describe the information or function the image adds. For a linked image, the alternative text should describe the link's destination or purpose.</p></article>
+                    <article class="panel"><h4>Decorative image</h4><p>Use <code>alt=""</code> when the image adds no information beyond nearby text, so assistive technology can skip it.</p></article>
+                    <article class="panel"><h4>Do not write “image of” by default</h4><p>Be concise and useful. Context may already make it clear that the content is an image.</p></article>
+                </div>
+                <h3>An image can be a link</h3>
+<pre><code>&lt;a href="gallery.html"&gt;
+    &lt;img src="images/gallery-preview.jpg"
+         alt="Open the campus photo gallery"
+         width="240" height="160"&gt;
+&lt;/a&gt;</code></pre>
+                <div class="note"><strong>Try the example:</strong> Create an <code>images</code> folder next to your HTML file, place an image named <code>campus-garden.jpg</code> inside it, then open the page. If the file path is wrong, the alternative text remains a useful fallback.</div>
+            </section>
+
+            <section id="forms">
+                <h2><span class="topic-number">08</span>Forms and User Input</h2>
+                <p>A form groups controls used to collect data. The <code>action</code> specifies where submitted data is sent, and <code>method</code> describes how it is sent. A server endpoint is required to process a real submission. Labels should be explicitly associated with controls using matching <code>for</code> and <code>id</code> values.</p>
+<pre><code>&lt;form action="/register" method="post"&gt;
+    &lt;label for="student-name"&gt;Name&lt;/label&gt;
+    &lt;input id="student-name" name="name" type="text" required&gt;
+
+    &lt;label for="student-email"&gt;Email&lt;/label&gt;
+    &lt;input id="student-email" name="email" type="email" required&gt;
+
+    &lt;button type="submit"&gt;Register&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                <h3>Common form controls and attributes</h3>
+                <table>
+                    <thead><tr><th>Control / attribute</th><th>Purpose</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>type="text"</code></td><td>Single-line text entry.</td></tr>
+                        <tr><td><code>type="email"</code>, <code>type="number"</code>, <code>type="date"</code></td><td>Typed input with suitable browser UI and basic validation.</td></tr>
+                        <tr><td><code>type="radio"</code></td><td>Choose one option from controls sharing the same <code>name</code>.</td></tr>
+                        <tr><td><code>type="checkbox"</code></td><td>Choose zero or more independent options.</td></tr>
+                        <tr><td><code>&lt;select&gt;</code></td><td>Choose from a list of options.</td></tr>
+                        <tr><td><code>&lt;textarea&gt;</code></td><td>Enter multi-line text.</td></tr>
+                        <tr><td><code>name</code></td><td>Key used for a control's value when a form is submitted.</td></tr>
+                        <tr><td><code>required</code>, <code>min</code>, <code>max</code>, <code>pattern</code></td><td>Browser-native constraint validation hints; the server must validate too.</td></tr>
+                    </tbody>
+                </table>
+                <h3>Runnable form demonstration</h3>
+                <p>Try the form. This page prevents a network submission and displays the entered values locally, so it demonstrates controls and browser validation without a server.</p>
+                <div class="demo">
+                    <form id="html-demo-form" class="sample-form">
+                        <label for="demo-name">Your name
+                            <input id="demo-name" name="name" type="text" autocomplete="name" required>
+                        </label>
+                        <label for="demo-email">Email address
+                            <input id="demo-email" name="email" type="email" autocomplete="email" required>
+                        </label>
+                        <fieldset>
+                            <legend>Study mode</legend>
+                            <label><input type="radio" name="mode" value="online" required> Online</label>
+                            <label><input type="radio" name="mode" value="campus"> Campus</label>
+                        </fieldset>
+                        <label for="demo-topic">Topic
+                            <select id="demo-topic" name="topic">
+                                <option value="structure">HTML structure</option>
+                                <option value="forms">Forms</option>
+                                <option value="accessibility">Accessibility</option>
+                            </select>
+                        </label>
+                        <label><span><input type="checkbox" name="updates" value="yes"> Send me study updates</span></label>
+                        <button type="submit">Preview form data</button>
+                    </form>
+                    <output id="form-output" class="demo-output" aria-live="polite">Submitted values will appear here.</output>
+                </div>
+            </section>
+
+            <section id="html5">
+                <h2><span class="topic-number">09</span>Semantic HTML5 Page Structure</h2>
+                <p>Semantic elements describe the role of a region, helping browsers, assistive technologies, developers, and search tools understand the page. Before HTML5, developers often used generic <code>&lt;div&gt;</code> elements for every region. A <code>&lt;div&gt;</code> is still useful when no more specific element fits, but use semantic markup where it communicates meaning.</p>
+                <div class="grid">
+                    <article class="panel"><h4><code>&lt;header&gt;</code> and <code>&lt;footer&gt;</code></h4><p>Introductory or closing content for a page or section.</p></article>
+                    <article class="panel"><h4><code>&lt;nav&gt;</code></h4><p>A major group of navigation links.</p></article>
+                    <article class="panel"><h4><code>&lt;main&gt;</code></h4><p>The unique, primary content of the document. Generally one visible main region per page.</p></article>
+                    <article class="panel"><h4><code>&lt;article&gt;</code> and <code>&lt;section&gt;</code></h4><p>A standalone composition and a thematic grouping, respectively; give sections a heading.</p></article>
+                    <article class="panel"><h4><code>&lt;aside&gt;</code></h4><p>Related or complementary content, such as a sidebar note.</p></article>
+                    <article class="panel"><h4><code>&lt;figure&gt;</code> and <code>&lt;figcaption&gt;</code></h4><p>Self-contained content such as an image or diagram with an optional caption.</p></article>
+                </div>
+<pre><code>&lt;body&gt;
+    &lt;header&gt;&lt;h1&gt;Student Journal&lt;/h1&gt;&lt;/header&gt;
+    &lt;nav aria-label="Main navigation"&gt;
+        &lt;a href="#latest"&gt;Latest article&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;main&gt;
+        &lt;article id="latest"&gt;
+            &lt;h2&gt;Learning semantic HTML&lt;/h2&gt;
+            &lt;p&gt;Elements give content a meaningful structure.&lt;/p&gt;
+        &lt;/article&gt;
+        &lt;aside&gt;Related reading: accessible web design.&lt;/aside&gt;
+    &lt;/main&gt;
+    &lt;footer&gt;Study notes, updated weekly.&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+                <div class="demo">
+                    <div class="semantic-demo">
+                        <header><strong>Student Journal</strong></header>
+                        <nav aria-label="Example navigation"><a href="#latest-example">Latest article</a></nav>
+                        <article id="latest-example">
+                            <h4>Learning semantic HTML</h4>
+                            <p>Elements give content a meaningful structure.</p>
+                        </article>
+                        <aside>Related reading: accessible web design.</aside>
+                        <footer>Study notes, updated weekly.</footer>
+                    </div>
+                </div>
+            </section>
+
+            <section id="media">
+                <h2><span class="topic-number">10</span>HTML5 Multimedia, Inputs, and Drag and Drop</h2>
+                <h3>Native audio and video</h3>
+                <p>HTML media elements provide browser playback controls without requiring a legacy plug-in. Provide a source file in your project and fallback text for browsers that cannot play it. Multiple <code>&lt;source&gt;</code> elements allow the browser to choose a supported format.</p>
+<pre><code>&lt;audio controls&gt;
+    &lt;source src="media/intro.mp3" type="audio/mpeg"&gt;
+    &lt;source src="media/intro.ogg" type="audio/ogg"&gt;
+    Your browser does not support embedded audio.
+&lt;/audio&gt;
+
+&lt;video controls width="640" poster="media/preview.jpg"&gt;
+    &lt;source src="media/lesson.mp4" type="video/mp4"&gt;
+    Your browser does not support embedded video.
+&lt;/video&gt;</code></pre>
+                <p>For a real video with spoken dialogue, include captions using a <code>&lt;track kind="captions"&gt;</code> file. Keep media files in the relative paths used by the markup, or replace those paths with the URLs of media you are permitted to use.</p>
+                <h3>Newer form input types</h3>
+                <p>HTML includes purpose-specific controls such as <code>email</code>, <code>url</code>, <code>tel</code>, <code>date</code>, <code>time</code>, <code>number</code>, <code>range</code>, and <code>color</code>. Browsers may provide appropriate controls and mobile keyboards. Built-in validation improves the user experience but does not replace server-side validation.</p>
+<pre><code>&lt;label for="appointment"&gt;Appointment date&lt;/label&gt;
+&lt;input id="appointment" name="appointment" type="date" required&gt;
+
+&lt;label for="rating"&gt;Rating&lt;/label&gt;
+&lt;input id="rating" name="rating" type="range" min="1" max="5" value="3"&gt;</code></pre>
+                <h3>Interactive drag-and-drop example</h3>
+                <p>The native Drag and Drop API uses the draggable attribute and events. This example moves the card into a drop zone; the JavaScript only changes this page and does not upload data.</p>
+<pre><code>&lt;div draggable="true"&gt;Drag this card&lt;/div&gt;
+&lt;div&gt;Drop the card here&lt;/div&gt;</code></pre>
+                <div class="demo">
+                    <div class="drag-area">
+                        <div id="drag-card" class="drag-card" draggable="true" tabindex="0">Drag this study card</div>
+                        <div id="drop-zone" class="drop-zone" tabindex="0">Drop the card in this area</div>
+                    </div>
+                    <button id="drop-card-button" class="demo-action" type="button">Place card in drop zone</button>
+                    <p id="drag-status" class="demo-output" aria-live="polite">You can drag the card into the highlighted area.</p>
+                </div>
+                <div class="note"><strong>Accessible alternatives:</strong> Dragging can be difficult or impossible for some users. Real interfaces should also offer buttons or keyboard controls to complete the same action.</div>
+            </section>
+
+            <section id="metadata">
+                <h2><span class="topic-number">11</span>Metadata, HTML, and XHTML</h2>
+                <p>Metadata is information about the document, written inside <code>&lt;head&gt;</code>. It is not normally shown as page content. A useful title, character encoding, responsive viewport declaration, description, and icon are common examples.</p>
+<pre><code>&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;meta name="description" content="A beginner's guide to HTML."&gt;
+    &lt;title&gt;HTML Beginner's Guide&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+                <p><strong>HTML</strong> is the modern web markup language. <strong>XHTML</strong> is HTML expressed using XML's stricter syntax rules, such as properly nesting and closing elements and quoting attribute values. Do not add an XHTML doctype or serve a page as XML unless you are intentionally building an XML-serialized document; ordinary HTML pages should use the HTML5 doctype.</p>
+                <div class="grid">
+                    <article class="panel"><h4>Good HTML habits</h4><ul><li>Start with the HTML5 doctype.</li><li>Declare the page language.</li><li>Use lowercase names and quoted values.</li><li>Nest elements correctly and use semantic elements.</li></ul></article>
+                    <article class="panel"><h4>Build for people</h4><ul><li>Use meaningful headings and link text.</li><li>Label form controls.</li><li>Provide useful image alternatives.</li><li>Check keyboard access and color contrast.</li></ul></article>
+                    <article class="panel"><h4>Test your document</h4><ul><li>Open the saved file in a browser.</li><li>Resize the viewport and try the controls.</li><li>Inspect the page source and browser developer tools.</li><li>Use an HTML validator to locate markup errors.</li></ul></article>
+                </div>
+            </section>
+
+            <section id="recap">
+                <h2>Unit 2 Recap</h2>
+                <ol>
+                    <li>HTML marks up content; a browser interprets the resulting document tree and renders it.</li>
+                    <li>Build complete documents with a doctype, root element, head metadata, and visible body content.</li>
+                    <li>Use elements, attributes, headings, paragraphs, and semantic formatting to communicate structure and meaning.</li>
+                    <li>Use anchors for navigation, lists for grouped items, tables for data, and images with appropriate alternative text.</li>
+                    <li>Forms collect user input; labels, names, input types, and validation attributes all matter.</li>
+                    <li>Semantic HTML5 elements, native media, and newer input types make pages more understandable and capable.</li>
+                    <li>Validate your markup and test the page with a browser, keyboard, and assistive-technology-aware practices.</li>
+                </ol>
+            </section>
+
+            <section id="must-learn">
+                <h2>Must-Learn HTML Topics for First Year</h2>
+                <div class="note">
+                    <strong>Revision checklist:</strong>
+                    <ul>
+                        <li><label><input type="checkbox"> Meaning of HTML, HyperText, elements, and tags</label></li>
+                        <li><label><input type="checkbox"> HTML5 document skeleton: doctype, html, head, title, and body</label></li>
+                        <li><label><input type="checkbox"> Element nesting, end tags, and void elements</label></li>
+                        <li><label><input type="checkbox"> Attributes: href, src, alt, width, height, id, class, lang, and title</label></li>
+                        <li><label><input type="checkbox"> Headings, paragraphs, line breaks, thematic breaks, and preformatted text</label></li>
+                        <li><label><input type="checkbox"> Semantic text: strong, em, mark, quotation, citation, subscript, and superscript</label></li>
+                        <li><label><input type="checkbox"> Inline styles and CSS color formats: names, HEX, RGB(A), and HSL(A)</label></li>
+                        <li><label><input type="checkbox"> Absolute, relative, fragment, and email links</label></li>
+                        <li><label><input type="checkbox"> Unordered, ordered, and description lists</label></li>
+                        <li><label><input type="checkbox"> Accessible tables using captions, headers, rows, and data cells</label></li>
+                        <li><label><input type="checkbox"> Images, relative paths, and meaningful or decorative alt text</label></li>
+                        <li><label><input type="checkbox"> Forms, labels, names, input types, radio buttons, checkboxes, and validation</label></li>
+                        <li><label><input type="checkbox"> Semantic layout: header, nav, main, article, section, aside, and footer</label></li>
+                        <li><label><input type="checkbox"> Audio, video, HTML5 input types, and drag-and-drop concepts</label></li>
+                        <li><label><input type="checkbox"> Metadata, HTML versus XHTML, validation, and accessible authoring</label></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <strong>Further reading:</strong>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">MDN HTML guide</a> ·
+            <a href="https://www.w3schools.com/html/" target="_blank" rel="noopener noreferrer">W3Schools HTML tutorial</a>
+        </footer>
+    </div>
+    <script>
+        document.querySelector("#download-pdf").addEventListener("click", () => {
+            window.print();
+        });
+
+        document.querySelector("#html-demo-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            const entries = [...data.entries()].map(([name, value]) => `${name}: ${value}`);
+            document.querySelector("#form-output").textContent = entries.join("\n");
+        });
+
+        const dragCard = document.querySelector("#drag-card");
+        const dropZone = document.querySelector("#drop-zone");
+        const dragStatus = document.querySelector("#drag-status");
+
+        const placeCardInDropZone = () => {
+            dropZone.append(dragCard);
+            dragStatus.textContent = "Card placed successfully. Refresh the page to reset the example.";
+        };
+
+        dragCard.addEventListener("dragstart", (event) => {
+            event.dataTransfer.setData("text/plain", "study-card");
+            event.dataTransfer.effectAllowed = "move";
+        });
+        dropZone.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "move";
+            dropZone.classList.add("is-over");
+        });
+        dropZone.addEventListener("dragleave", () => {
+            dropZone.classList.remove("is-over");
+        });
+        dropZone.addEventListener("drop", (event) => {
+            event.preventDefault();
+            dropZone.classList.remove("is-over");
+            if (event.dataTransfer.getData("text/plain") !== "study-card") return;
+            placeCardInDropZone();
+        });
+        document.querySelector("#drop-card-button").addEventListener("click", placeCardInDropZone);
+    </script>
+</body>
+</html>

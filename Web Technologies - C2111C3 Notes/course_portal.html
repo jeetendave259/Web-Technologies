@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2111C3 Web Technologies - ITMBU Course Portal</title>
+    <style>
+        :root {
+            --primary-color: #075752;
+            --secondary-color: #087e78;
+            --bg-color: #edf2ef;
+            --text-color: #23343a;
+            --gold: #efbd4b;
+            --sidebar-width: 250px;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+        }
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            height: 100%;
+            overflow-y: auto;
+        }
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            background-color: #064743;
+            border-bottom: 1px solid #11736e;
+        }
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ccc;
+            padding: 15px 20px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .nav-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .nav-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-left: 4px solid var(--gold);
+            font-weight: bold;
+        }
+        .resource-links {
+            border-top: 1px solid #11736e;
+            margin-top: 10px;
+            padding: 12px 20px 20px;
+        }
+        .resource-links a {
+            display: block;
+            color: #dce8f5;
+            padding: 7px 0;
+            text-decoration: none;
+        }
+        .resource-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        /* Main Content Area */
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .unit-page {
+            display: none;
+            background: white;
+            padding: 30px;
+            border: 1px solid #d8e2dd;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .unit-page.active {
+            display: block;
+        }
+        h1 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h3 {
+            color: var(--secondary-color);
+            margin-top: 25px;
+        }
+        p, li {
+            line-height: 1.6;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            color: #8b2e50;
+        }
+        .topic-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 700px) {
+            body { height: auto; min-height: 100vh; flex-direction: column; }
+            .sidebar { width: 100%; height: auto; max-height: none; flex-direction: row; flex-wrap: wrap; overflow: visible; }
+            .sidebar-header { width: 100%; padding: 14px; }
+            .sidebar > .nav-btn { flex: 1 1 150px; }
+            .resource-links { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 4px 14px; }
+            .main-content { height: auto; min-height: 0; padding: 18px; overflow: visible; }
+            .unit-page { padding: 20px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>ITMBU B.Tech CSE</h2>
+            <p style="font-size: 0.8rem; margin-top: 5px; color: #aaa;">Web Technologies (C2111C3)</p>
+        </div>
+        <button class="nav-btn active" data-unit="unit1" onclick="showUnit('unit1', this)">Unit 1: Intro to WWW</button>
+        <button class="nav-btn" data-unit="unit2" onclick="showUnit('unit2', this)">Unit 2: HTML & HTML5</button>
+        <button class="nav-btn" data-unit="unit3" onclick="showUnit('unit3', this)">Unit 3: CSS Fundamentals</button>
+        <button class="nav-btn" data-unit="unit4" onclick="showUnit('unit4', this)">Unit 4: JS & JQuery</button>
+        <button class="nav-btn" data-unit="unit5" onclick="showUnit('unit5', this)">Unit 5: XML Processing</button>
+        <button class="nav-btn" data-unit="unit6" onclick="showUnit('unit6', this)">Unit 6: PHP Server-Side</button>
+        <nav class="resource-links" aria-label="Course resources">
+            <a href="Syllabus.html">Full syllabus</a>
+            <a href="unit1_intro_to_www.html">Unit 1: WWW study guide</a>
+            <a href="unit2_html.html">Unit 2: HTML study guide</a>
+            <a href="unit3_css_final.html">Unit 3: CSS study guide</a>
+            <a href="unit4_javascript_jquery.html">Unit 4: JavaScript and jQuery guide</a>
+            <a href="unit5_xml.html">Unit 5: XML study guide</a>
+            <a href="unit6_php.html">Unit 6: PHP study guide</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        
+        <!-- UNIT 1 PAGE -->
+        <div id="unit1" class="unit-page active">
+            <h1>Unit 1: Introduction to WWW</h1>
+            <p><strong>Total Hours: 04</strong></p>
+            
+            <div class="topic-box">
+                <h3>Internet vs. WWW</h3>
+                <p>The <strong>Internet</strong> is a massive network of networks, a networking infrastructure. It connects millions of computers together globally. The <strong>World Wide Web (WWW)</strong> is a way of accessing information over the medium of the Internet. It is an information-sharing model that is built on top of the Internet.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>HTTP Protocol: Request and Response</h3>
+                <p>The Hypertext Transfer Protocol (HTTP) operates as a request-response protocol between a client and server. A web browser (client) submits an HTTP request message to the server. The server, which provides resources such as HTML files and other content, returns a response message to the client containing the requested content and status information.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Web Browser and Web Servers</h3>
+                <ul>
+                    <li><strong>Web Browser:</strong> A software application for accessing information on the WWW (e.g., Chrome, Firefox, Edge). It renders HTML, CSS, and executes JavaScript.</li>
+                    <li><strong>Web Server:</strong> Hardware or software that responds to client requests over the WWW (e.g., Apache, Nginx, Microsoft IIS).</li>
+                </ul>
+            </div>
+
+            <div class="topic-box">
+                <h3>Features of Web 2.0</h3>
+                <p>Web 2.0 highlights user-generated content, usability, and interoperability. Key features include social media networking, AJAX-driven dynamic content, blogging, and rich internet applications (RIAs) that allow users to interact and collaborate in a social media dialogue.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Setting up Unix/Linux Web Servers & Dynamic IP</h3>
+                <p>Deploying web applications often requires configuring Apache or Nginx on Linux environments. <strong>Dynamic IP</strong> addresses are temporarily assigned to devices by a DHCP server, which requires dynamic DNS (DDNS) setups if a server must be accessed publicly via a consistent hostname.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Concepts of Effective Web Design and Issues</h3>
+                <p>Effective design encompasses visual hierarchy, responsive layouts, accessibility, and fast load times. Common design issues include cross-browser compatibility, handling varied screen resolutions, and ensuring intuitive navigation.</p>
+            </div>
+            <div class="topic-box">
+                <h3>Unit 1 Study Guide</h3>
+                <p><a href="unit1_intro_to_www.html">Open the detailed World Wide Web guide with examples</a></p>
+            </div>
+        </div>
+
+        <!-- UNIT 2 PAGE -->
+        <div id="unit2" class="unit-page">
+            <h1>Unit 2: HTML</h1>
+            <p><strong>Total Hours: 07</strong></p>
+
+            <div class="topic-box">
+                <h3>Basics of HTML, Formatting, Fonts, Colors, Hyperlinks</h3>
+                <p>HTML (HyperText Markup Language) is the standard markup language for creating web pages. Elements are represented by tags. Standard formatting includes <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, and <code>&lt;u&gt;</code>. Hyperlinks are created using the anchor tag <code>&lt;a href="url"&gt;</code>, and colors can be applied via inline CSS or deprecated HTML attributes.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Lists, Tables, Images, Forms</h3>
+                <ul>
+                    <li><strong>Lists:</strong> Ordered (<code>&lt;ol&gt;</code>) and Unordered (<code>&lt;ul&gt;</code>) lists containing list items (<code>&lt;li&gt;</code>).</li>
+                    <li><strong>Tables:</strong> Structured data using <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code> (rows), and <code>&lt;td&gt;</code> (data cells).</li>
+                    <li><strong>Images:</strong> Embedded using the <code>&lt;img src="path" alt="text"&gt;</code> tag.</li>
+                    <li><strong>Forms:</strong> Collect user input using <code>&lt;form&gt;</code>, containing various <code>&lt;input&gt;</code> fields, textareas, and buttons.</li>
+                </ul>
+            </div>
+
+            <div class="topic-box">
+                <h3>HTML5 New Elements & Input Types</h3>
+                <p>HTML5 introduced semantic tags like <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code>, and <code>&lt;section&gt;</code>. It also introduced new input types for forms, such as <code>email</code>, <code>date</code>, <code>range</code>, and <code>color</code>, which provide built-in client-side validation.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>HTML5: Drag/Drop, Video, Audio</h3>
+                <p>HTML5 allows native multimedia embedding without third-party plugins using the <code>&lt;audio&gt;</code> and <code>&lt;video&gt;</code> tags. The Drag and Drop API allows users to click and drag elements to a different location or drop target on the webpage.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>XHTML: Meta Tags</h3>
+                <p>XHTML is a stricter, XML-based version of HTML requiring properly closed tags and lowercase attributes. <code>&lt;meta&gt;</code> tags provide metadata about the HTML document, utilized by browsers (how to display content) and search engines (keywords, author, description).</p>
+            </div>
+            <div class="topic-box">
+                <h3>Unit 2 Study Guide</h3>
+                <p><a href="unit2_html.html">Open the detailed HTML guide with runnable examples</a></p>
+            </div>
+        </div>
+
+        <!-- UNIT 3 PAGE -->
+        <div id="unit3" class="unit-page">
+            <h1>Unit 3: CSS</h1>
+            <p><strong>Total Hours: 04</strong></p>
+
+            <div class="topic-box">
+                <h3>Need for CSS, Introduction, Syntax and Structure</h3>
+                <p>Cascading Style Sheets (CSS) separates content (HTML) from presentation (styling). A CSS rule consists of a selector and a declaration block: <code>selector { property: value; }</code>. This allows for global style changes across multiple web pages from a single `.css` file.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Background Images, Colors and Properties</h3>
+                <p>CSS controls backgrounds via properties like <code>background-color</code>, <code>background-image</code>, <code>background-repeat</code>, and <code>background-size</code>, allowing for complex visual layering.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Manipulation of Texts: Font, Border and Boxes</h3>
+                <p>The CSS Box Model is fundamental, dictating that every element is a box composed of margins, borders, padding, and the actual content. Text manipulation involves properties like <code>font-family</code>, <code>font-size</code>, <code>text-align</code>, and <code>line-height</code>.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>CSS Positioning CSS2, Overview and Features of CSS3</h3>
+                <ul>
+                    <li><strong>CSS2 Positioning:</strong> Includes <code>static</code>, <code>relative</code>, <code>absolute</code>, and <code>fixed</code> positioning.</li>
+                    <li><strong>CSS3 Features:</strong> Introduced advanced styling capabilities like media queries for responsive design, flexbox, grid, transitions, animations, rounded corners (<code>border-radius</code>), and box shadows.</li>
+                </ul>
+            </div>
+
+            <div class="topic-box">
+                <h3>Unit 3 Study Resources</h3>
+                <ul>
+                    <li><a href="unit3_css_final.html">Open the consolidated CSS guide with examples</a></li>
+                    <li><a href="Syllabus.html">View the full course syllabus</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- UNIT 4 PAGE -->
+        <div id="unit4" class="unit-page">
+            <h1>Unit 4: Introduction to JavaScript and JQuery</h1>
+            <p><strong>Total Hours: 15</strong></p>
+
+            <div class="topic-box">
+                <h3>Client-side Scripting: Variables, Conditions, Loops, Functions</h3>
+                <p>JavaScript provides logic and interactivity to web pages. Variables store data (<code>let</code>, <code>const</code>, <code>var</code>). Control flow is managed via <code>if/else</code> statements and loops (<code>for</code>, <code>while</code>). Functions encapsulate reusable code blocks.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Advanced JavaScript: Objects & DOM</h3>
+                <p>JavaScript is an object-oriented language. The Document Object Model (DOM) is a programming interface for HTML, representing the page so that programs can change the document structure, style, and content dynamically.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Forms, Validations, Events, and Buttons</h3>
+                <p>JavaScript intercepts form submissions to perform client-side validation (ensuring fields aren't empty, passwords meet length criteria, etc.) before sending data to the server. This is achieved by attaching event listeners (like <code>onclick</code> or <code>onsubmit</code>) to buttons and form elements.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>DHTML & AJAX</h3>
+                <ul>
+                    <li><strong>DHTML:</strong> Dynamic HTML refers to the combination of HTML, CSS, and JavaScript to create interactive and animated web sites.</li>
+                    <li><strong>AJAX:</strong> Asynchronous JavaScript and XML allows web pages to be updated asynchronously by exchanging small amounts of data with the server behind the scenes, eliminating the need to reload the entire page.</li>
+                </ul>
+            </div>
+
+            <div class="topic-box">
+                <h3>JQuery: Introduction</h3>
+                <p>jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, and AJAX much simpler with an easy-to-use API that works across a multitude of browsers.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Unit 4 Study Guide</h3>
+                <p><a href="unit4_javascript_jquery.html">Open detailed JavaScript and jQuery notes with interactive examples</a></p>
+            </div>
+        </div>
+
+        <!-- UNIT 5 PAGE -->
+        <div id="unit5" class="unit-page">
+            <h1>Unit 5: XML</h1>
+            <p><strong>Total Hours: 08</strong></p>
+
+            <div class="topic-box">
+                <h3>Introduction to XML & Key Components</h3>
+                <p>eXtensible Markup Language (XML) is designed to store and transport data, focusing on what data is rather than how it looks. Key components include custom tags, elements, attributes, and a strictly hierarchical tree structure.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>DTD and Schemas</h3>
+                <p>A Document Type Definition (DTD) defines the structure and the legal elements and attributes of an XML document. XML Schemas (XSD) are an XML-based alternative to DTDs, providing stronger typing and more precise control over the data structures.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Transforming XML using XSL and XSLT</h3>
+                <p>eXtensible Stylesheet Language (XSL) is a styling language for XML. XSLT (XSL Transformations) is used to transform XML documents into other formats, such as transforming XML data into an XHTML document for display in a web browser.</p>
+            </div>
+            <div class="topic-box">
+                <h3>Unit 5 Study Guide</h3>
+                <p><a href="unit5_xml.html">Open the detailed XML guide with transformation examples</a></p>
+            </div>
+        </div>
+
+        <!-- UNIT 6 PAGE -->
+        <div id="unit6" class="unit-page">
+            <h1>Unit 6: PHP</h1>
+            <p><strong>Total Hours: 10</strong></p>
+
+            <div class="topic-box">
+                <h3>Introduction to Server-Side Scripting & PHP Syntax</h3>
+                <p>PHP (Hypertext Preprocessor) is a widely-used open source general-purpose scripting language that is especially suited for web development and can be embedded into HTML. PHP scripts execute on the server, generating HTML which is then sent to the client. Scripts are enclosed in <code>&lt;?php ... ?&gt;</code> tags.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>String Processing and Regular Expressions</h3>
+                <p>PHP offers powerful string manipulation functions. Regular expressions (using PCRE functions like <code>preg_match</code>) allow for complex pattern matching, searching, and replacing within strings, which is vital for sanitizing and validating user input.</p>
+            </div>
+
+            <div class="topic-box">
+                <h3>Web Development Frameworks</h3>
+                <p>PHP frameworks (like Laravel, CodeIgniter, or Symfony) provide a basic structure for streamlining the development of web apps. They promote Rapid Application Development (RAD), enforce MVC (Model-View-Controller) architecture, and provide built-in security features to prevent SQL injection and cross-site scripting.</p>
+            </div>
+            <div class="topic-box">
+                <h3>Unit 6 Study Guide</h3>
+                <p><a href="unit6_php.html">Open the detailed PHP guide with runnable examples</a></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Interactive Navigation Script -->
+    <script>
+        function showUnit(unitId, btnElement, updateHash = true) {
+            const selectedPage = document.getElementById(unitId);
+            if (!selectedPage) return;
+
+            // Hide all unit pages
+            const pages = document.querySelectorAll('.unit-page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.unit === unitId));
+
+            // Show selected unit and highlight button
+            selectedPage.classList.add('active');
+            if (updateHash && location.hash !== `#${unitId}`) {
+                history.replaceState(null, '', `#${unitId}`);
+            }
+        }
+
+        const initialUnit = location.hash.slice(1);
+        const initialButton = document.querySelector(`.nav-btn[data-unit="${initialUnit}"]`)
+            || document.querySelector('.nav-btn.active');
+        showUnit(initialButton.dataset.unit, initialButton, false);
+    </script>
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Unit 1 study guide to the World Wide Web, the Internet, HTTP, browsers and servers, Web 2.0, Linux web servers, dynamic IP, and effective web design.">
+    <title>Unit 1: Introduction to the World Wide Web - Web Technologies</title>
+    <style>
+        :root {
+            --ink: #23343a;
+            --teal: #087e78;
+            --teal-dark: #075752;
+            --coral: #d95e45;
+            --gold: #efbd4b;
+            --green: #36775a;
+            --paper: #ffffff;
+            --page: #edf2ef;
+            --soft-teal: #e6f4f1;
+            --soft-coral: #fbede9;
+            --line: #d8e2dd;
+            --code: #202a2d;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            padding: 24px;
+            color: var(--ink);
+            background: var(--page);
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.65;
+        }
+        .page {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            overflow: hidden;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            box-shadow: 0 8px 28px rgba(7, 87, 82, 0.08);
+        }
+        .masthead {
+            padding: 38px 44px 30px;
+            color: white;
+            background: var(--teal-dark);
+            border-bottom: 6px solid var(--coral);
+        }
+        .course-label {
+            margin: 0 0 8px;
+            color: #f6d684;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .masthead h1 { max-width: 850px; margin: 0; font-size: 2.2rem; line-height: 1.2; }
+        .masthead p:last-child { max-width: 900px; margin: 14px 0 0; color: #e0f0ed; }
+        .top-links, .topic-nav {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+            padding: 15px 44px;
+            border-bottom: 1px solid var(--line);
+        }
+        .top-links { background: #f7f9f8; }
+        .topic-nav {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.97);
+            box-shadow: 0 2px 8px rgba(7, 87, 82, 0.06);
+        }
+        a { color: var(--teal-dark); }
+        .masthead a, footer a { color: #f6d684; }
+        .top-links a, .topic-nav a { font-weight: 650; }
+        .print-button {
+            min-height: 42px;
+            padding: 8px 14px;
+            color: white;
+            background: var(--teal);
+            border: 1px solid var(--teal);
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        }
+        .print-button:hover {
+            background: var(--teal-dark);
+            border-color: var(--teal-dark);
+            box-shadow: 0 3px 8px rgba(7, 87, 82, 0.2);
+            transform: translateY(-1px);
+        }
+        .print-button:active { box-shadow: none; transform: translateY(1px); }
+        .print-button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 2px;
+        }
+        main { padding: 4px 44px 48px; }
+        section { padding-top: 24px; scroll-margin-top: 72px; }
+        h2 {
+            margin: 28px 0 14px;
+            color: var(--teal-dark);
+            font-size: 1.55rem;
+            line-height: 1.3;
+        }
+        h2 .topic-number {
+            display: inline-block;
+            margin-right: 8px;
+            color: var(--coral);
+            font-size: 0.85rem;
+            vertical-align: 0.15em;
+        }
+        h3 { margin: 26px 0 10px; color: var(--teal); font-size: 1.15rem; }
+        h4 { margin: 0 0 8px; color: var(--teal-dark); }
+        p { margin: 10px 0 15px; }
+        ul, ol { padding-left: 24px; }
+        li { margin: 6px 0; }
+        .lead { max-width: 900px; font-size: 1.08rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 18px 0; }
+        .panel {
+            min-width: 0;
+            padding: 18px;
+            background: #f7f9f8;
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--teal);
+        }
+        .panel p:last-child { margin-bottom: 0; }
+        .note { padding: 14px 16px; background: #fbf4df; border-left: 5px solid var(--gold); }
+        .note p:last-child { margin-bottom: 0; }
+        code {
+            padding: 1px 5px;
+            color: #8b2e50;
+            background: #f3edf0;
+            border-radius: 3px;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.93em;
+            overflow-wrap: anywhere;
+        }
+        pre {
+            max-width: 100%;
+            margin: 14px 0 0;
+            padding: 16px 18px;
+            overflow-x: auto;
+            color: #e5edf3;
+            background: var(--code);
+            border-left: 4px solid var(--gold);
+            border-radius: 4px;
+            line-height: 1.5;
+            tab-size: 4;
+        }
+        pre code { padding: 0; color: inherit; background: none; font-size: 0.9rem; }
+        .demo {
+            margin: 0 0 22px;
+            padding: 22px;
+            background: white;
+            border: 1px solid var(--line);
+            border-top: 0;
+            border-radius: 0 0 4px 4px;
+        }
+        .demo::before {
+            display: block;
+            margin: -22px -22px 18px;
+            padding: 5px 12px;
+            color: var(--teal-dark);
+            background: #fbf4df;
+            content: "TRY THE EXAMPLE";
+            font-size: 0.72rem;
+            font-weight: 750;
+        }
+        .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+        .demo-surface { min-width: 0; padding: 16px; background: #f8fbfa; border: 1px solid var(--line); }
+        .demo-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #586d69;
+            font-size: 0.76rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        button {
+            min-height: 42px;
+            margin: 4px 4px 4px 0;
+            padding: 9px 14px;
+            color: white;
+            background: var(--teal);
+            border: 0;
+            border-radius: 4px;
+            font: inherit;
+            font-weight: 650;
+            cursor: pointer;
+        }
+        button:hover { background: var(--teal-dark); }
+        input[type="text"] {
+            min-height: 42px;
+            padding: 8px 10px;
+            border: 1px solid #aebdb8;
+            border-radius: 3px;
+            font: inherit;
+        }
+        .form-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .status { min-height: 1.7em; margin: 12px 0 0; color: var(--teal-dark); font-weight: 600; }
+        .status.error { color: #a1332a; }
+        .output {
+            min-height: 56px;
+            margin-top: 12px;
+            padding: 12px;
+            overflow-wrap: anywhere;
+            background: #f7f9f8;
+            border: 1px solid var(--line);
+        }
+        .http-output { min-height: 116px; white-space: pre-wrap; font-family: Consolas, "Courier New", monospace; }
+        table { width: 100%; margin: 18px 0; border-collapse: collapse; }
+        th, td { padding: 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+        th { color: white; background: var(--teal-dark); }
+        tr:nth-child(even) td { background: #f7f9f8; }
+        .responsive-card {
+            padding: 18px;
+            color: white;
+            background: var(--teal);
+            border-left: 6px solid var(--gold);
+            border-radius: 4px;
+        }
+        .responsive-card h4 { color: white; }
+        .post-list { display: grid; gap: 8px; }
+        .post { padding: 10px 12px; background: white; border: 1px solid var(--line); border-left: 4px solid var(--teal); }
+        footer { padding: 22px 44px; color: #e5f0ee; background: var(--teal-dark); }
+        @media (max-width: 700px) {
+            body { padding: 0; }
+            .page { border: 0; border-radius: 0; }
+            .masthead { padding: 28px 22px 24px; }
+            .masthead h1 { font-size: 1.8rem; }
+            .top-links, .topic-nav { padding: 14px 22px; }
+            main { padding: 2px 22px 32px; }
+            footer { padding: 20px 22px; }
+            h2 { font-size: 1.35rem; }
+            th, td { min-width: 130px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+            .print-button:hover, .print-button:active { transform: none; }
+        }
+        @media print {
+            @page { margin: 16mm; }
+            html { scroll-behavior: auto; }
+            body { padding: 0; color: #111; background: white; font-size: 10.5pt; }
+            .page { width: 100%; overflow: visible; border: 0; border-radius: 0; box-shadow: none; }
+            .top-links, .topic-nav, .print-button { display: none !important; }
+            main { padding: 0; }
+            section { padding-top: 8px; scroll-margin-top: 0; }
+            h2, h3, h4 { break-after: avoid; }
+            .panel, .note, .demo, .demo-surface, .responsive-card, .post { break-inside: avoid; box-shadow: none; }
+            pre, table { break-inside: auto; }
+            pre {
+                overflow: visible;
+                white-space: pre-wrap;
+                overflow-wrap: anywhere;
+                color: #111;
+                background: #f2f4f5;
+            }
+            pre code { color: #111; }
+            th { color: #111; background: #e5eaee; }
+            tr:nth-child(even) td { background: #f6f7f8; }
+            footer { padding: 14px 0 0; color: #111; background: white; }
+            footer a, a { color: #075752; text-decoration: underline; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page" id="top">
+        <header class="masthead">
+            <p class="course-label">Web Technologies | C2111C3 | Unit 1 | 04 Contact Hours</p>
+            <h1>Introduction to the World Wide Web</h1>
+            <p>Understand how the Web works: from URLs and HTTP requests to browsers, servers, Web 2.0, Linux hosting, dynamic IP addresses, and accessible web design. Examples include browser demos and commands you can run locally.</p>
+            <p><strong>Based on:</strong> course syllabus and Unit 1 lecture material · <strong>Presentation themes:</strong> web architecture, protocols, infrastructure, and user-centered design.</p>
+        </header>
+
+        <nav class="top-links" aria-label="Related course pages">
+            <a href="course_portal.html#unit1">Course portal: Unit 1</a>
+            <a href="Syllabus.html">Full syllabus</a>
+            <a href="unit1_intro_to_www.html">Unit 1: WWW</a>
+            <a href="unit2_html.html">Unit 2: HTML</a>
+            <a href="unit3_css_final.html">Unit 3: CSS</a>
+            <a href="unit4_javascript_jquery.html">Unit 4: JavaScript and jQuery</a>
+            <a href="unit5_xml.html">Unit 5: XML</a>
+            <a href="unit6_php.html">Unit 6: PHP</a>
+            <button class="print-button" id="download-pdf" type="button">Download as PDF</button>
+        </nav>
+        <nav class="topic-nav" aria-label="Jump to a topic">
+            <a href="#www">Concept of WWW</a>
+            <a href="#internet">Internet and WWW</a>
+            <a href="#http">HTTP</a>
+            <a href="#browser-server">Browsers and servers</a>
+            <a href="#web2">Web 2.0</a>
+            <a href="#linux-servers">Unix/Linux servers</a>
+            <a href="#dynamic-ip">Dynamic IP</a>
+            <a href="#web-design">Effective web design</a>
+        </nav>
+
+        <main>
+            <section id="www">
+                <h2><span class="topic-number">01</span>Concept of the World Wide Web</h2>
+                <p class="lead">The <strong>World Wide Web (WWW, or Web)</strong> is an information system of interlinked resources that people access over the Internet. A web resource may be a page, image, video, downloadable file, or data service. Hyperlinks connect resources so users can move from one to another.</p>
+                <p>The Web is built on open technologies. A browser asks for a resource using its address (usually a URL), communicates with a web server using HTTP or HTTPS, and renders the returned content. HTML describes document structure; CSS controls presentation; JavaScript can add behavior. The World Wide Web Consortium (W3C) and other standards organizations publish specifications that help browsers and sites interoperate.</p>
+                <div class="grid">
+                    <article class="panel"><h4>Resources</h4><p>Pages and other content are identified by addresses and may be hosted on different servers.</p></article>
+                    <article class="panel"><h4>Hyperlinks</h4><p>Links connect documents and data, making it possible to navigate between resources.</p></article>
+                    <article class="panel"><h4>Open standards</h4><p>Common protocols and formats let browsers, servers, and tools from different vendors work together.</p></article>
+                </div>
+                <h3>URL anatomy</h3>
+                <p>Consider <code>https://www.example.com:443/guide/http?level=1#request</code>:</p>
+                <table>
+                    <thead><tr><th>Part</th><th>Example</th><th>Meaning</th></tr></thead>
+                    <tbody>
+                        <tr><td>Scheme</td><td><code>https</code></td><td>How the browser communicates; HTTPS uses HTTP protected by TLS.</td></tr>
+                        <tr><td>Host</td><td><code>www.example.com</code></td><td>The domain name resolved through DNS to an IP address.</td></tr>
+                        <tr><td>Port</td><td><code>443</code></td><td>The server endpoint; HTTPS commonly uses 443, HTTP commonly 80.</td></tr>
+                        <tr><td>Path</td><td><code>/guide/http</code></td><td>Identifies a resource or route on the host.</td></tr>
+                        <tr><td>Query</td><td><code>?level=1</code></td><td>Optional parameters sent with the request.</td></tr>
+                        <tr><td>Fragment</td><td><code>#request</code></td><td>Points to a location in the returned resource; it is generally handled by the browser and not sent in the HTTP request.</td></tr>
+                    </tbody>
+                </table>
+                <div class="note"><strong>History:</strong> Tim Berners-Lee proposed the Web at CERN in 1989 to help researchers share information. The first website described the project itself. The Web has since grown from mostly read-only pages into interactive applications and services.</div>
+            </section>
+
+            <section id="internet">
+                <h2><span class="topic-number">02</span>Internet and WWW</h2>
+                <p>The <strong>Internet</strong> is the global network of interconnected networks: hardware, links, routers, addressing, and protocols that move data between devices. The <strong>Web</strong> is one service that uses this network. Email, online games, file transfer, and voice calls can also use the Internet without being Web pages.</p>
+                <div class="grid">
+                    <article class="panel"><h4>Internet: the infrastructure</h4><p>IP addressing and routing deliver packets between networks. Transport protocols such as TCP or QUIC carry application traffic across connections.</p></article>
+                    <article class="panel"><h4>Web: an application on it</h4><p>Browsers use URLs, HTTP, HTML, and related technologies to request and display linked resources.</p></article>
+                </div>
+                <p><strong>Analogy:</strong> The Internet is the road system; the Web is one kind of journey made using those roads. The roads carry many other kinds of traffic too.</p>
+                <h3>From domain name to web page</h3>
+                <ol>
+                    <li>The browser parses a URL and checks its cache and local configuration.</li>
+                    <li>DNS resolves the host name to an IP address.</li>
+                    <li>The browser establishes a connection to the server (and negotiates TLS for HTTPS).</li>
+                    <li>It sends an HTTP request; the server returns an HTTP response.</li>
+                    <li>The browser parses HTML, requests referenced resources, and renders the page.</li>
+                </ol>
+                <div class="note"><strong>IP address basics:</strong> IPv4 addresses are 32 bits (for example, <code>192.0.2.10</code>); IPv6 addresses are 128 bits (for example, <code>2001:db8::10</code>). Examples in these documentation ranges are reserved for teaching and should not be used as live server addresses.</div>
+            </section>
+
+            <section id="http">
+                <h2><span class="topic-number">03</span>HTTP Protocol: Request and Response</h2>
+                <p><strong>HTTP</strong> (Hypertext Transfer Protocol) is a stateless application-layer protocol used to exchange requests and responses. A request identifies a method and target and may include headers and a body. A response includes a status code, headers, and an optional body. Cookies or application tokens can be used to associate multiple requests with a session.</p>
+                <h3>Example request</h3>
+<pre><code>GET /api/message?name=Asha HTTP/1.1
+Host: localhost:8080
+Accept: application/json
+User-Agent: ExampleBrowser/1.0
+
+</code></pre>
+                <h3>Example response</h3>
+<pre><code>HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-store
+
+{"message":"Hello, Asha!","source":"server"}</code></pre>
+                <table>
+                    <thead><tr><th>Request / response part</th><th>What it tells the other side</th><th>Examples</th></tr></thead>
+                    <tbody>
+                        <tr><td>Request line</td><td>Method, resource target, and protocol version.</td><td><code>GET /docs HTTP/1.1</code></td></tr>
+                        <tr><td>Request headers</td><td>Metadata about the host, accepted content, credentials, or client.</td><td><code>Host</code>, <code>Accept</code>, <code>Content-Type</code></td></tr>
+                        <tr><td>Request body</td><td>Optional data sent to the server, often with POST or PUT.</td><td>Form fields or JSON</td></tr>
+                        <tr><td>Status line</td><td>Protocol version and outcome code.</td><td><code>200 OK</code>, <code>404 Not Found</code></td></tr>
+                        <tr><td>Response headers</td><td>Metadata about the result and how it should be handled or cached.</td><td><code>Content-Type</code>, <code>Cache-Control</code></td></tr>
+                        <tr><td>Response body</td><td>The returned representation, such as HTML, JSON, an image, or no body.</td><td>HTML or API data</td></tr>
+                    </tbody>
+                </table>
+                <h3>Common methods and status codes</h3>
+                <ul>
+                    <li><code>GET</code> retrieves a representation; <code>POST</code> submits data; <code>PUT</code> replaces a resource; <code>DELETE</code> requests deletion.</li>
+                    <li><code>200</code> means success; <code>201</code> means created; <code>301</code>/<code>302</code> indicate redirects; <code>400</code> is a bad request; <code>401</code> is unauthenticated; <code>403</code> is forbidden; <code>404</code> is not found; <code>500</code> is a server error.</li>
+                    <li>HTTPS protects HTTP traffic in transit with TLS. It does not by itself prove that a site is trustworthy or that its content is safe.</li>
+                </ul>
+                <h3>Run a real local HTTP request and response</h3>
+                <p>The following browser demo calls a local Node.js server and displays the actual HTTP status, response content type, and returned JSON. To run it, save the server code below as <code>server.mjs</code> beside this HTML file, install Node.js if needed, run <code>node server.mjs</code>, and open <code>http://localhost:8080</code>. The API and page are same-origin and remain on your own computer.</p>
+                <div class="demo">
+                    <form id="http-demo-form" class="form-row">
+                        <label for="http-name">Name to send:</label>
+                        <input id="http-name" name="name" type="text" value="Asha" maxlength="60">
+                        <button type="submit">Send GET request</button>
+                    </form>
+                    <p class="status" id="http-status" aria-live="polite">Start the local server and submit the form to send a real HTTP request.</p>
+                    <div class="output http-output" id="http-output" aria-label="HTTP response details">Request: GET /api/message?name=Asha
+Response: not sent yet</div>
+                </div>
+                <h4>Runnable server: <code>server.mjs</code></h4>
+<pre><code>import { createServer } from "node:http";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+
+const pagePath = fileURLToPath(new URL("./unit1_intro_to_www.html", import.meta.url));
+const server = createServer(async (request, response) =&gt; {
+    const url = new URL(request.url ?? "/", `http://${request.headers.host ?? "localhost"}`);
+
+    if (request.method === "GET" &amp;&amp; url.pathname === "/api/message") {
+        const suppliedName = (url.searchParams.get("name") ?? "visitor").trim();
+        const name = suppliedName.slice(0, 60) || "visitor";
+        response.writeHead(200, {
+            "Content-Type": "application/json; charset=utf-8",
+            "Cache-Control": "no-store"
+        });
+        response.end(JSON.stringify({ message: `Hello, ${name}!`, source: "server" }));
+        return;
+    }
+
+    if (request.method === "GET" &amp;&amp; (url.pathname === "/" || url.pathname === "/unit1_intro_to_www.html")) {
+        try {
+            const page = await readFile(pagePath);
+            response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+            response.end(page);
+        } catch (error) {
+            console.error("Could not read the study-guide page:", error);
+            response.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
+            response.end("The study-guide file could not be read.");
+        }
+        return;
+    }
+
+    response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
+    response.end("Not found");
+});
+
+server.listen(8080, "127.0.0.1", () =&gt; {
+    console.log("Open http://localhost:8080");
+});</code></pre>
+                <p>You can also inspect an HTTP exchange from a terminal while the server is running:</p>
+<pre><code>curl -i "http://localhost:8080/api/message?name=Asha"</code></pre>
+            </section>
+
+            <section id="browser-server">
+                <h2><span class="topic-number">04</span>Web Browsers and Web Servers</h2>
+                <p>A <strong>web browser</strong> is a client application that requests resources and presents them to a user. A <strong>web server</strong> is software that listens for requests and returns responses. “Server” can also refer to the computer or virtual machine running that software.</p>
+                <table>
+                    <thead><tr><th>Browser (client)</th><th>Web server</th></tr></thead>
+                    <tbody>
+                        <tr><td>Resolves a URL and requests resources.</td><td>Listens on a network address and receives requests, commonly on ports 80 (HTTP) or 443 (HTTPS).</td></tr>
+                        <tr><td>Parses HTML into a document tree and CSS into style rules.</td><td>Checks routing and access rules; locates a static file or passes work to an application.</td></tr>
+                        <tr><td>Lays out and paints the page; runs client-side JavaScript in a browser environment.</td><td>Returns static files or generated responses from application code and data services.</td></tr>
+                        <tr><td>Examples: Firefox, Chrome, Safari, Edge.</td><td>Examples: Apache HTTP Server, Nginx, Caddy, Microsoft IIS.</td></tr>
+                    </tbody>
+                </table>
+                <p>A browser rendering engine (such as Gecko, Blink, or WebKit) displays the page; a JavaScript engine executes scripts. A server such as Apache or Nginx handles HTTP connections and often works with application runtimes such as PHP, Python, or Node.js.</p>
+                <div class="note"><strong>Static and dynamic responses:</strong> A static server can return a stored HTML file. A dynamic application can use request data, rules, or a database to create a different response for each request. Even a dynamic page is ultimately delivered as a response for the browser to render.</div>
+            </section>
+
+            <section id="web2">
+                <h2><span class="topic-number">05</span>Features of Web 2.0</h2>
+                <p><strong>Web 2.0</strong> describes a shift toward participatory, interactive web services rather than pages that only publish information for reading. It is a broad term for a change in how people use the Web, not a new HTTP version or a formal technical standard.</p>
+                <div class="grid">
+                    <article class="panel"><h4>User-generated content</h4><p>People publish posts, photos, reviews, videos, and comments instead of only consuming material created by a site owner.</p></article>
+                    <article class="panel"><h4>Social collaboration</h4><p>Communities share, tag, discuss, and collaboratively edit material in social networks, blogs, forums, and wikis.</p></article>
+                    <article class="panel"><h4>Rich interaction</h4><p>JavaScript and asynchronous requests can update part of a page without a full reload. AJAX is a technique, not one specific format.</p></article>
+                    <article class="panel"><h4>APIs and hosted services</h4><p>HTTP APIs (often using JSON) let applications exchange data. Software as a Service runs software on hosted infrastructure and exposes it through the Web.</p></article>
+                </div>
+                <h3>Small interactive example: user-created posts</h3>
+                <p>This browser-only demo lets a visitor add a short post to the page. It illustrates user participation and DOM updates. The posts are held only in this page's memory; a real social site would send them to a server, store them, moderate them, and enforce account permissions.</p>
+                <div class="demo">
+                    <form id="post-form" class="form-row">
+                        <label for="post-text">Share an idea:</label>
+                        <input id="post-text" type="text" maxlength="100" required placeholder="What did you learn?">
+                        <button type="submit">Add post</button>
+                    </form>
+                    <p class="status" id="post-status" aria-live="polite">Your post will appear below and stay only until this page is reloaded.</p>
+                    <div class="post-list" id="post-list" aria-live="polite">
+                        <div class="post">Welcome to the Web Technologies learning wall.</div>
+                    </div>
+                </div>
+                <div class="note"><strong>AJAX in one sentence:</strong> JavaScript sends an HTTP request asynchronously (for example with <code>fetch()</code>), receives data such as JSON, and updates part of the page. A real network-backed example is available in the HTTP section above.</div>
+            </section>
+
+            <section id="linux-servers">
+                <h2><span class="topic-number">06</span>Setting Up Unix and Linux Web Servers</h2>
+                <p>A Unix-like web server needs a machine, a web-server program, a document root or application, network access, and safe configuration. The steps below show a small Apache virtual host on Debian or Ubuntu Linux. Commands and service names vary on other Unix-like systems; Fedora/RHEL and Nginx notes follow.</p>
+                <h3>Apache on Debian or Ubuntu</h3>
+                <p>Install Apache, create a document root, and create a tiny page. Commands using <code>sudo</code> change system configuration; review each path before running them.</p>
+<pre><code>sudo apt update
+sudo apt install apache2
+sudo systemctl enable --now apache2
+
+sudo install -d -o "$USER" -g www-data -m 2750 /var/www/unit1-demo
+cat &gt; index.html &lt;&lt;'HTML'
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;My first hosted page&lt;/title&gt;
+&lt;h1&gt;Hello from Apache&lt;/h1&gt;
+&lt;p&gt;This HTML file is being served over HTTP.&lt;/p&gt;
+&lt;/html&gt;
+HTML
+sudo install -o "$USER" -g www-data -m 0640 index.html /var/www/unit1-demo/index.html</code></pre>
+                <p>Create <code>/etc/apache2/sites-available/unit1-demo.conf</code> with this virtual-host configuration:</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+    ServerName unit1-demo.test
+    DocumentRoot /var/www/unit1-demo
+
+    &lt;Directory /var/www/unit1-demo&gt;
+        Options -Indexes
+        AllowOverride None
+        Require all granted
+    &lt;/Directory&gt;
+
+    ErrorLog ${APACHE_LOG_DIR}/unit1-demo-error.log
+    CustomLog ${APACHE_LOG_DIR}/unit1-demo-access.log combined
+&lt;/VirtualHost&gt;</code></pre>
+                <p>Enable and test the site. The reserved <code>.test</code> name is for testing; send the host header explicitly so Apache selects this virtual host.</p>
+<pre><code>sudo a2ensite unit1-demo.conf
+sudo apache2ctl configtest
+sudo systemctl reload apache2
+curl -i -H 'Host: unit1-demo.test' http://127.0.0.1/</code></pre>
+                <h3>Firewall and public hosting</h3>
+                <p>For a local-only lab, test on the server itself first. If you deliberately host a public site, configure the machine and network firewall for the required ports, use a real domain, configure HTTPS, update software, restrict file permissions, and monitor logs. Opening a port or forwarding traffic through a home router exposes the service to the Internet; do not expose an unpatched development server or private files.</p>
+                <p>On Ubuntu with UFW, a basic HTTP firewall rule is <code>sudo ufw allow 80/tcp</code>. Only allow HTTPS after TLS is configured. If deploying a public domain, use a trusted certificate authority and keep certificate renewal working.</p>
+                <h3>Other Unix/Linux options</h3>
+                <ul>
+                    <li><strong>Fedora/RHEL with Apache:</strong> install <code>httpd</code> with <code>sudo dnf install httpd</code>, start it with <code>sudo systemctl enable --now httpd</code>, and use the distribution's firewall and SELinux guidance. The service and configuration paths can differ from Debian.</li>
+                    <li><strong>Nginx on Ubuntu:</strong> install with <code>sudo apt install nginx</code>; server blocks are commonly stored in <code>/etc/nginx/sites-available/</code> and linked into <code>sites-enabled/</code>. Run <code>sudo nginx -t</code> before reloading with <code>sudo systemctl reload nginx</code>.</li>
+                    <li><strong>macOS / BSD / other Unix:</strong> package managers, service control, firewall tooling, and default paths differ. Follow the system's current Apache or Nginx documentation instead of assuming Ubuntu commands apply unchanged.</li>
+                </ul>
+            </section>
+
+            <section id="dynamic-ip">
+                <h2><span class="topic-number">07</span>Dynamic IP Addresses and Dynamic DNS</h2>
+                <p>An IP address identifies a network interface for packet routing. A <strong>dynamic IP address</strong> is assigned for a period (a lease) by a DHCP server. Home routers typically receive a public-facing address from an ISP and separately assign private addresses to devices on the local network. The public address may change when the lease is renewed or the connection changes; the exact policy depends on the provider.</p>
+                <div class="grid">
+                    <article class="panel"><h4>Public address</h4><p>The Internet-facing address used by the router or host. Some ISPs use carrier-grade NAT, so a subscriber may not have a directly reachable public IPv4 address.</p></article>
+                    <article class="panel"><h4>Private address</h4><p>An internal address such as <code>192.168.1.20</code> used within a local network. It is not, by itself, a public destination on the Internet.</p></article>
+                    <article class="panel"><h4>Dynamic DNS (DDNS)</h4><p>A client updates a DNS record when the public address changes, so a hostname can continue to resolve to the latest address.</p></article>
+                </div>
+                <p><strong>Why DDNS helps:</strong> A DNS name normally points to an address using records such as A (IPv4) or AAAA (IPv6). If a home-hosted server's public address changes, a DDNS client can authenticate to its provider and update the record. DNS caches may retain the old answer until the record's TTL expires. DDNS does not create a public IP, bypass carrier-grade NAT, open firewall ports, or make an unsafe server secure.</p>
+                <h3>Safe classroom simulation</h3>
+                <p>The button below switches between two documentation-only example addresses. It simulates a DHCP lease changing and a DDNS hostname being updated. It does <strong>not</strong> inspect or change your real network address.</p>
+                <div class="demo">
+                    <div class="demo-grid">
+                        <div class="demo-surface">
+                            <span class="demo-label">Simulated router WAN address</span>
+                            <p class="lead" id="simulated-ip">198.51.100.20</p>
+                            <button type="button" id="change-ip">Simulate a new DHCP lease</button>
+                        </div>
+                        <div class="demo-surface">
+                            <span class="demo-label">Simulated DNS record</span>
+                            <p><code>home.example.test</code> points to <strong id="ddns-target">198.51.100.20</strong></p>
+                            <p class="status" id="ddns-status" aria-live="polite">Record is synchronized in this simulation.</p>
+                        </div>
+                    </div>
+                </div>
+                <p>To inspect local interfaces on Linux, run <code>ip -br address</code>. This shows local interface addresses, not necessarily your public IP. Use your router or ISP account to see the WAN address. A production DDNS updater should use a provider's documented authenticated client or API and protect its credentials.</p>
+            </section>
+
+            <section id="web-design">
+                <h2><span class="topic-number">08</span>Effective Web Design and Common Issues</h2>
+                <p>Effective web design helps people accomplish their goals. It brings together useful content, clear interaction, accessible presentation, responsive layout, and reliable performance. Design decisions should be tested with real content and users, not based only on appearance.</p>
+                <div class="grid">
+                    <article class="panel"><h4>User-centered hierarchy</h4><p>Make the page purpose clear. Use meaningful headings, readable type, spacing, and contrast to guide attention to important information.</p></article>
+                    <article class="panel"><h4>Navigation</h4><p>Use descriptive link labels, consistent menus, a logical information structure, and visible feedback. Avoid trapping visitors in unclear or excessively deep paths.</p></article>
+                    <article class="panel"><h4>Responsive design</h4><p>Use flexible layouts and media queries so content works on narrow and wide viewports without horizontal scrolling or tiny text.</p></article>
+                    <article class="panel"><h4>Accessibility</h4><p>Use semantic HTML, keyboard-operable controls, visible focus, labels, alternative text for meaningful images, and sufficient color contrast.</p></article>
+                    <article class="panel"><h4>Performance</h4><p>Resize and compress images, minimize unnecessary assets, cache suitable resources, and avoid blocking the first render with needless scripts.</p></article>
+                    <article class="panel"><h4>Compatibility and safety</h4><p>Test across browsers and devices; keep software updated, use HTTPS, validate input, and protect personal data.</p></article>
+                </div>
+                <h3>Common design issues and their remedies</h3>
+                <table>
+                    <thead><tr><th>Issue</th><th>Why it matters</th><th>Better approach</th></tr></thead>
+                    <tbody>
+                        <tr><td>Clutter and weak hierarchy</td><td>People cannot tell what is important or where to begin.</td><td>Group related content, prioritize one main action, and use whitespace intentionally.</td></tr>
+                        <tr><td>Mobile unresponsiveness</td><td>Text and controls become difficult to read or use on small screens.</td><td>Start with a flexible layout, test narrow viewports, and avoid fixed-width page containers.</td></tr>
+                        <tr><td>Low contrast and inaccessible controls</td><td>Some people cannot perceive or operate content.</td><td>Test text contrast; provide keyboard access, labels, and visible focus. WCAG 2.1's typical minimum for normal text is a 4.5:1 contrast ratio.</td></tr>
+                        <tr><td>Slow loading and layout shifts</td><td>Visitors wait longer and controls can move while a page loads.</td><td>Optimize media, specify image dimensions, defer nonessential code, and measure performance.</td></tr>
+                        <tr><td>Broken links or browser-specific behavior</td><td>Users lose trust or cannot complete tasks.</td><td>Test links and key flows in multiple browsers; use standards-based HTML and CSS.</td></tr>
+                        <tr><td>Security and privacy oversights</td><td>Input flaws or excessive data collection can expose users and systems.</td><td>Validate on the server, encode output for its context, use least privilege, and collect only necessary information.</td></tr>
+                    </tbody>
+                </table>
+                <h3>Responsive example: run it right here</h3>
+                <p>The demonstration is a CSS grid: it places cards side-by-side when there is room and stacks them when the available width is narrow. Resize the browser window to see the cards adapt.</p>
+                <div class="demo">
+                    <div class="demo-grid">
+                        <div class="demo-surface responsive-card"><h4>Clear purpose</h4><p>A concise heading tells visitors what this page offers.</p></div>
+                        <div class="demo-surface responsive-card"><h4>Readable content</h4><p>Flexible cards adjust to available space without fixed page widths.</p></div>
+                        <div class="demo-surface responsive-card"><h4>Accessible controls</h4><p>Labels and focus indicators help people navigate and interact.</p></div>
+                    </div>
+                </div>
+                <p>To try the responsive behavior in a minimal standalone page, save the following as <code>responsive-demo.html</code> and open it in a browser:</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;title&gt;Responsive cards&lt;/title&gt;
+&lt;style&gt;
+    body { margin: 1rem; font: 1rem/1.5 system-ui, sans-serif; }
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+        gap: 1rem;
+    }
+    article { padding: 1rem; border: 1px solid #087e78; border-radius: .5rem; }
+&lt;/style&gt;
+&lt;main class="cards"&gt;
+    &lt;article&gt;&lt;h2&gt;Plan&lt;/h2&gt;&lt;p&gt;Start with user needs.&lt;/p&gt;&lt;/article&gt;
+    &lt;article&gt;&lt;h2&gt;Design&lt;/h2&gt;&lt;p&gt;Make content readable.&lt;/p&gt;&lt;/article&gt;
+    &lt;article&gt;&lt;h2&gt;Test&lt;/h2&gt;&lt;p&gt;Try different screen widths.&lt;/p&gt;&lt;/article&gt;
+&lt;/main&gt;
+&lt;/html&gt;</code></pre>
+            </section>
+
+            <section aria-labelledby="summary-heading">
+                <h2 id="summary-heading">Unit 1 at a glance</h2>
+                <ol>
+                    <li>The Internet connects networks; the Web is a linked information system that uses the Internet.</li>
+                    <li>DNS helps resolve domain names; HTTP carries requests and responses between clients and servers.</li>
+                    <li>Browsers render resources, while web servers receive requests and return static or generated responses.</li>
+                    <li>Web 2.0 emphasizes participation, user-generated content, collaboration, and interactive services.</li>
+                    <li>Linux hosting requires careful server configuration, network access, permissions, and security maintenance.</li>
+                    <li>DDNS can keep a name updated when an eligible public IP changes, but it does not solve NAT or security issues.</li>
+                    <li>Effective design should be clear, responsive, accessible, fast, compatible, and safe.</li>
+                </ol>
+            </section>
+
+            <section id="must-learn">
+                <h2>Must-Learn WWW Topics for First Year</h2>
+                <div class="note">
+                    <strong>Revision checklist:</strong>
+                    <ul>
+                        <li><label><input type="checkbox"> Concept of the World Wide Web and linked resources</label></li>
+                        <li><label><input type="checkbox"> Difference between the Internet and the Web</label></li>
+                        <li><label><input type="checkbox"> URL components: scheme, host, port, path, query, and fragment</label></li>
+                        <li><label><input type="checkbox"> DNS lookup and the browser-to-server request flow</label></li>
+                        <li><label><input type="checkbox"> HTTP request methods, headers, bodies, responses, and status codes</label></li>
+                        <li><label><input type="checkbox"> HTTP versus HTTPS and the role of TLS</label></li>
+                        <li><label><input type="checkbox"> Roles of web browsers, rendering engines, application code, and web servers</label></li>
+                        <li><label><input type="checkbox"> Static content compared with dynamically generated responses</label></li>
+                        <li><label><input type="checkbox"> Web 2.0: participation, user-generated content, collaboration, APIs, and rich interaction</label></li>
+                        <li><label><input type="checkbox"> Basic Unix/Linux web-server setup and virtual-host configuration</label></li>
+                        <li><label><input type="checkbox"> Document roots, permissions, service management, firewall, and safe hosting</label></li>
+                        <li><label><input type="checkbox"> Public and private IP addresses, DHCP leases, and dynamic IP changes</label></li>
+                        <li><label><input type="checkbox"> Dynamic DNS purpose and limitations, including NAT and DNS caching</label></li>
+                        <li><label><input type="checkbox"> Effective design: hierarchy, navigation, responsive layout, accessibility, and performance</label></li>
+                        <li><label><input type="checkbox"> Common web-design problems and how to test and improve a page</label></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <strong>Unit 1 source:</strong>
+            <a href="course_portal.html#unit1">Course portal</a> ·
+            <a href="Syllabus.html">Full syllabus</a>
+        </footer>
+    </div>
+
+    <script>
+        document.querySelector("#download-pdf").addEventListener("click", () => {
+            window.print();
+        });
+
+        const httpForm = document.querySelector("#http-demo-form");
+        httpForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const name = document.querySelector("#http-name").value.trim().slice(0, 60);
+            const status = document.querySelector("#http-status");
+            const output = document.querySelector("#http-output");
+            const requestUrl = `/api/message?name=${encodeURIComponent(name || "visitor")}`;
+            status.classList.remove("error");
+            status.textContent = "Sending request to the local server…";
+            output.textContent = `Request: GET ${requestUrl}\nResponse: waiting`;
+
+            try {
+                const response = await fetch(requestUrl, {
+                    headers: { Accept: "application/json" }
+                });
+                const contentType = response.headers.get("content-type") ?? "(not provided)";
+                const body = await response.text();
+                output.textContent = `Request: GET ${requestUrl}\nResponse: HTTP ${response.status} ${response.statusText}\nContent-Type: ${contentType}\n\n${body}`;
+                status.textContent = response.ok
+                    ? "The browser received an HTTP response from the local server."
+                    : `The server returned HTTP ${response.status}.`;
+                if (!response.ok) status.classList.add("error");
+            } catch {
+                output.textContent = `Request: GET ${requestUrl}\nResponse: not received`;
+                status.textContent = "Could not reach the demo server. Run node server.mjs from the page's directory, then open http://localhost:8080.";
+                status.classList.add("error");
+            }
+        });
+
+        document.querySelector("#post-form").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const input = document.querySelector("#post-text");
+            const text = input.value.trim();
+            const status = document.querySelector("#post-status");
+            if (!text) {
+                status.textContent = "Enter a short idea before adding a post.";
+                return;
+            }
+            const post = document.createElement("div");
+            post.className = "post";
+            post.textContent = text;
+            document.querySelector("#post-list").prepend(post);
+            input.value = "";
+            status.textContent = "Post added to this page. It is not sent to a server.";
+        });
+
+        const demoAddresses = ["198.51.100.20", "198.51.100.53"];
+        let addressIndex = 0;
+        document.querySelector("#change-ip").addEventListener("click", () => {
+            addressIndex = (addressIndex + 1) % demoAddresses.length;
+            const nextAddress = demoAddresses[addressIndex];
+            document.querySelector("#simulated-ip").textContent = nextAddress;
+            document.querySelector("#ddns-target").textContent = nextAddress;
+            document.querySelector("#ddns-status").textContent = "Simulated DDNS client updated the hostname after the address changed.";
+        });
+    </script>
+</body>
+</html>

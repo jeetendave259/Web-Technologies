@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Technologies (C2111C3) - Syllabus Breakdown</title>
+    <style>
+        /* CSS styling representing Unit 3 concepts */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #edf2ef;
+            color: #23343a;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #075752;
+        }
+        .course-info {
+            text-align: center;
+            margin-bottom: 30px;
+            font-style: italic;
+            color: #555;
+        }
+        .unit-card {
+            background-color: #fff;
+            border: 1px solid #d8e2dd;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(7,87,82,0.06);
+            overflow: hidden;
+        }
+        .unit-header {
+            background-color: #087e78;
+            color: #ffffff;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 160ms ease;
+        }
+        .unit-header:hover {
+            background-color: #075752;
+        }
+        .unit-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+            background-color: #fafafa;
+        }
+        .unit-content.active {
+            padding: 20px;
+            max-height: 600px;
+            border-top: 1px solid #d8e2dd;
+        }
+        ul {
+            line-height: 1.8;
+            margin: 0;
+            padding-left: 20px;
+        }
+        .page-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px 22px;
+            margin: 0 0 30px;
+            padding: 12px 0;
+            border-top: 1px solid #d8e2dd;
+            border-bottom: 1px solid #d8e2dd;
+        }
+        .page-links a {
+            color: #075752;
+            font-weight: 600;
+        }
+        .page-links a:focus-visible, .unit-header:focus-visible {
+            outline: 3px solid #efbd4b;
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Web Technologies: HTML, CSS, JavaScript, PHP</h1>
+    <div class="course-info">
+        <p>Course Code: C2111C3 | ITM(SLS) Baroda University, Vadodara</p>
+    </div>
+    <nav class="page-links" aria-label="Course pages">
+        <a href="course_portal.html#unit1">Course portal</a>
+        <a href="unit1_intro_to_www.html">Unit 1: WWW guide</a>
+        <a href="unit2_html.html">Unit 2: HTML guide</a>
+        <a href="unit3_css_final.html">Unit 3: CSS guide</a>
+        <a href="unit4_javascript_jquery.html">Unit 4: JavaScript and jQuery guide</a>
+        <a href="unit5_xml.html">Unit 5: XML guide</a>
+        <a href="unit6_php.html">Unit 6: PHP guide</a>
+    </nav>
+
+    <!-- Unit 1 -->
+    <div class="unit-card">
+        <div class="unit-header" onclick="toggleUnit(this)">
+            <span>Unit 1: Introduction to WWW</span>
+            <span>04 Hrs</span>
+        </div>
+        <div class="unit-content">
+            <ul>
+                <li>Concept of WWW, Internet and WWW</li>
+                <li>HTTP protocol: Request and Response</li>
+                <li>Web Browser and Web Servers</li>
+                <li>Features of Web 2.0</li>
+                <li>Setting up Unix and Linux Web Servers, Dynamic IP</li>
+                <li>Concepts of effective Web Design and Web Design Issues</li>
+                <li><a href="unit1_intro_to_www.html">Read the detailed Unit 1 WWW guide</a></li>
+                <li><a href="course_portal.html#unit1">Open Unit 1 in the course portal</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Unit 2 -->
+    <div class="unit-card">
+        <div class="unit-header" onclick="toggleUnit(this)">
+            <span>Unit 2: HTML</span>
+            <span>07 Hrs</span>
+        </div>
+        <div class="unit-content">
+            <ul>
+                <li>Basics of HTML, Formatting and Fonts</li>
+                <li>Color and Hyperlinks</li>
+                <li>List, Table, Images, Forms</li>
+                <li>HTML5 New Elements</li>
+                <li>HTML5: Drag/Drop, Video, Audio, Input types</li>
+                <li>XHTML: Meta Tags</li>
+                <li><a href="unit2_html.html">Read the detailed Unit 2 HTML guide</a></li>
+                <li><a href="course_portal.html#unit2">Open Unit 2 in the course portal</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Unit 3 -->
+    <div class="unit-card">
+        <div class="unit-header" onclick="toggleUnit(this)">
+            <span>Unit 3: CSS</span>
+            <span>04 Hrs</span>
+        </div>
+        <div class="unit-content">
+            <ul>
+                <li>Need for CSS, Introduction to CSS</li>
+                <li>Syntax and Structure</li>
+                <li>Background images, Colors and properties</li>
+                <li>Manipulation of Texts: Font, Border and Boxes</li>
+                <li>CSS positioning CSS2, Overview and Features of CSS3</li>
+                <li><a href="course_portal.html#unit3">Open Unit 3 in the course portal</a></li>
+                <li><a href="unit3_css_final.html">Read the consolidated Unit 3 CSS study guide</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Unit 4 -->
+    <div class="unit-card">
+        <div class="unit-header" onclick="toggleUnit(this)">
+            <span>Unit 4: Introduction to JavaScript and JQuery</span>
+            <span>15 Hrs</span>
+        </div>
+        <div class="unit-content">
+            <ul>
+                <li>Client-side Scripting with JavaScript: Variables, conditions, Loops, Functions, Pop up Boxes</li>
+                <li>Advance JavaScript: JavaScript and objects, DOM</li>
+                <li>Forms and Validations</li>
+                <li>DHTML: Combining HTML, CSS and JavaScript</li>
+                <li>Events and Buttons</li>
+                <li>AJAX: Introduction, AJAX Based Web Applications</li>
+                <li>JQuery: Introduction</li>
+                <li><a href="unit4_javascript_jquery.html">Read the detailed Unit 4 JavaScript and jQuery guide</a></li>
+                <li><a href="course_portal.html#unit4">Open Unit 4 in the course portal</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Unit 5 -->
+    <div class="unit-card">
+        <div class="unit-header" onclick="toggleUnit(this)">
+            <span>Unit 5: XML</span>
+            <span>08 Hrs</span>
+        </div>
+        <div class="unit-content">
+            <ul>
+                <li>Introduction to XML, XML Key Components</li>
+                <li>DTD and schemas</li>
+                <li>Transforming XML using XSL and XSLT</li>
+                <li><a href="unit5_xml.html">Read the detailed Unit 5 XML guide</a></li>
+                <li><a href="course_portal.html#unit5">Open Unit 5 in the course portal</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Unit 6 -->
+    <div class="unit-card">
+        <div class="unit-header" onclick="toggleUnit(this)">
+            <span>Unit 6: PHP</span>
+            <span>10 Hrs</span>
+        </div>
+        <div class="unit-content">
+            <ul>
+                <li>Introduction to Server-Side Scripting</li>
+                <li>Introduction and Basic Syntax of PHP</li>
+                <li>String Processing and Regular expression</li>
+                <li>Web Development Frameworks</li>
+                <li><a href="unit6_php.html">Read the detailed Unit 6 PHP guide</a></li>
+                <li><a href="course_portal.html#unit6">Open Unit 6 in the course portal</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <p><a href="course_portal.html">Return to the course portal</a></p>
+
+    <!-- JavaScript representing Unit 4 concepts -->
+    <script>
+        function toggleUnit(element) {
+            // Select the content div immediately following the clicked header
+            const content = element.nextElementSibling;
+            
+            // Toggle the 'active' class to expand/collapse
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+            } else {
+                // Optional: Close other open units for a true accordion effect
+                document.querySelectorAll('.unit-content').forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                content.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
